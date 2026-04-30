@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hossein Gorji — Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0c0f;
+        --bg2: #0f1215;
+        --surface: #1a1f2e;
+        --border: #2a3040;
+        --border2: #3a4555;
+        --accent: #00d4ff;
+        --accent3: #00ffb3;
+        --accent4: #7c5cfc;
+        --text: #e8edf5;
+        --text2: #8a9ab5;
+        --text3: #5a6a80;
+        --green: #00d68f;
+        --amber: #ffb84d;
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 212, 255, 0.012) 2px,
+          rgba(0, 212, 255, 0.012) 4px
+        );
+        pointer-events: none;
+        z-index: 999;
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(10, 12, 15, 0.88);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+      }
+      .nav-logo span {
+        color: var(--text3);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--text2);
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 60px;
+        position: relative;
+      }
+      .hero-content {
+        max-width: 700px;
+      }
+      .hero-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .hero-tag::before {
+        content: "";
+        display: inline-block;
+        width: 32px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.25rem;
+      }
+      .hero h1 .accent {
+        color: var(--accent);
+      }
+      .hero-sub {
+        font-size: 1.1rem;
+        color: var(--text2);
+        max-width: 540px;
+        margin-bottom: 2.5rem;
+        line-height: 1.8;
+      }
+      .hero-ctas {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        padding: 12px 24px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        background: var(--accent3);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+      .btn-outline:hover {
+        background: rgba(0, 212, 255, 0.08);
+        transform: translateY(-2px);
+      }
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 214, 143, 0.1);
+        border: 1px solid rgba(0, 214, 143, 0.3);
+        border-radius: 100px;
+        padding: 6px 16px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--green);
+        margin-bottom: 2rem;
+      }
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .hero-gfx {
+        position: absolute;
+        right: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 420px;
+        opacity: 0.14;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        line-height: 1.6;
+        pointer-events: none;
+        white-space: pre;
+      }
+
+      section {
+        padding: 100px 0;
+      }
+      .section-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .section-label::before {
+        content: "//";
+        color: var(--text3);
+      }
+      .section-title {
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 3rem;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      .about-text p {
+        color: var(--text2);
+        margin-bottom: 1rem;
+        line-height: 1.9;
+      }
+      .about-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .stat-box {
+        background: var(--surface);
+        padding: 1.5rem;
+      }
+      .stat-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .stat-label {
+        font-size: 13px;
+        color: var(--text3);
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .skill-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+      .skill-card:hover {
+        border-color: var(--border2);
+        transform: translateY(-3px);
+      }
+      .skill-card:hover::before {
+        transform: scaleX(1);
+      }
+      .skill-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(0, 212, 255, 0.1);
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        font-size: 18px;
+      }
+      .skill-name {
+        font-weight: 600;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+      }
+      .skill-desc {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        padding: 3px 10px;
+        border-radius: 3px;
+        background: rgba(0, 212, 255, 0.08);
+        border: 1px solid rgba(0, 212, 255, 0.15);
+        color: var(--accent);
+      }
+      .tag.green {
+        background: rgba(0, 214, 143, 0.08);
+        border-color: rgba(0, 214, 143, 0.2);
+        color: var(--green);
+      }
+      .tag.purple {
+        background: rgba(124, 92, 252, 0.1);
+        border-color: rgba(124, 92, 252, 0.25);
+        color: var(--accent4);
+      }
+      .tag.amber {
+        background: rgba(255, 184, 77, 0.08);
+        border-color: rgba(255, 184, 77, 0.2);
+        color: var(--amber);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+      }
+      .project-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .project-card:hover {
+        border-color: var(--border2);
+        transform: translateY(-4px);
+      }
+      .project-header {
+        padding: 1.5rem 1.5rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+      .project-badge {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 3px;
+        letter-spacing: 0.06em;
+        background: rgba(0, 212, 255, 0.1);
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        color: var(--accent);
+      }
+      .project-badge.featured {
+        background: rgba(124, 92, 252, 0.12);
+        border-color: rgba(124, 92, 252, 0.3);
+        color: var(--accent4);
+      }
+      .project-icon {
+        font-size: 28px;
+      }
+      .project-body {
+        padding: 0 1.5rem;
+      }
+      .project-name {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .project-desc {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+      .project-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+      }
+      .project-stack {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .project-link {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: opacity 0.2s;
+      }
+      .project-link:hover {
+        opacity: 0.7;
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--border);
+      }
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 6px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow:
+          0 0 0 3px var(--bg),
+          0 0 0 4px var(--accent);
+      }
+      .tl-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+      }
+      .tl-role {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+      }
+      .tl-org {
+        font-size: 14px;
+        color: var(--text2);
+        margin-bottom: 0.8rem;
+      }
+      .tl-bullets {
+        list-style: none;
+      }
+      .tl-bullets li {
+        font-size: 14px;
+        color: var(--text2);
+        padding: 3px 0 3px 1.2rem;
+        position: relative;
+        line-height: 1.7;
+      }
+      .tl-bullets li::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .contact-blurb {
+        color: var(--text2);
+        line-height: 1.9;
+      }
+      .contact-blurb h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 1rem;
+      }
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text);
+        transition: all 0.2s;
+      }
+      .contact-link:hover {
+        border-color: var(--accent);
+        background: rgba(0, 212, 255, 0.05);
+      }
+      .contact-link-icon {
+        width: 36px;
+        height: 36px;
+        background: rgba(0, 212, 255, 0.1);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .contact-link-text {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .contact-link-sub {
+        font-size: 12px;
+        color: var(--text3);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--text3);
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (max-width: 768px) {
+        .about-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .hero-gfx {
+          display: none;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+
+      .photo {
+        width: 200px; /* 1. DEFINE WIDTH */
+        height: 200px; /* 2. DEFINE HEIGHT (Must be equal to width) */
+        border-radius: 50%; /* 3. MAKE IT A CIRCLE */
+        overflow: hidden; /* 4. HIDE CORNERS OF THE IMAGE */
+
+        /* Optional Styling: Add a border and shadow */
+        border: 3px solid #f2ede6; /* Light gray border */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow */
+
+        /* Center the container on the page for this example */
+        left: auto;
+      }
+
+      /* This is the image style, ensuring it fills the circle */
+      .photo img {
+        width: 100%; /* Ensure image spans full width */
+        height: 100%; /* Ensure image spans full height */
+        object-fit: cover; /* 5. THIS KEEPS ASPECT RATIO WITHOUT DISTORTING */
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <div class="nav-logo"><span>~/</span>hossein.gorji</div>
+        <div class="photo"><img src="hossein.png" alt="" /></div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Open to internships &amp; co-ops
+          </div>
+          <div class="hero-tag">
+            Computer Science · 3rd Year · York University
+          </div>
+          <h1>
+            Turning ideas <br />
+            into <br />
+            software that works <br />
+          </h1>
+          <p class="hero-sub">
+            CS student at York University passionate about full-stack web
+            development, backend systems, and data-driven solutions. I build web
+            apps that are functional, fast, and user-friendly.
+          </p>
+          <div class="hero-ctas">
+            <a href="#projects" class="btn btn-primary">View Projects →</a>
+            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+          </div>
+        </div>
+        <pre class="hero-gfx">
+app.get('/restaurants', async (req, res) => {
+  const { city, cuisine, price } = req.query;
+  const results = await db.all(
+    `SELECT * FROM restaurants
+     WHERE city = ?
+     AND cuisine = ?
+     AND price_range <= ?
+     ORDER BY rating DESC`,
+    [city, cuisine, price]
+  );
+  res.json({ data: results });
+});</pre
+        >
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-label">About</div>
+        <h2 class="section-title">Who I am</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              I'm Hossein Gorji, a 3rd-year Computer Science Honours student at
+              York University in Toronto. I have a strong foundation in
+              programming, problem-solving, and data-driven solutions.
+            </p>
+            <p>
+              I enjoy building innovative projects — from full-stack web
+              applications with backend databases to interactive front-end
+              interfaces. I'm adept at collaborating in team environments,
+              picking up new technologies quickly, and applying creative
+              approaches to technical challenges.
+            </p>
+            <p>
+              Currently seeking opportunities to contribute my technical
+              expertise, analytical skills, and passion for building impactful
+              software.
+            </p>
+          </div>
+          <div>
+            <div class="about-stats">
+              <div class="stat-box">
+                <div class="stat-num">3rd</div>
+                <div class="stat-label">Year at York</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">2028</div>
+                <div class="stat-label">Expected grad</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">2+</div>
+                <div class="stat-label">Projects shipped</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">6+</div>
+                <div class="stat-label">Technologies</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" style="background: var(--bg2)">
+      <div class="container">
+        <div class="section-label">Skills</div>
+        <h2 class="section-title">Technical toolbox</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon">🌐</div>
+            <div class="skill-name">Frontend Development</div>
+            <div class="skill-desc">
+              Building responsive, interactive UIs with smooth navigation and
+              dynamic elements, optimized across all devices.
+            </div>
+            <div class="skill-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">⚙️</div>
+            <div class="skill-name">Backend Development</div>
+            <div class="skill-desc">
+              Developing server-side APIs with Node.js and Express, including
+              user authentication, protected endpoints, and routing.
+            </div>
+            <div class="skill-tags">
+              <span class="tag green">Node.js</span>
+              <span class="tag green">Express</span>
+              <span class="tag green">bcrypt</span>
+              <span class="tag green">REST APIs</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">🗄️</div>
+            <div class="skill-name">Databases</div>
+            <div class="skill-desc">
+              Designing and querying relational databases for persistent
+              storage, retrieval, and search functionality.
+            </div>
+            <div class="skill-tags">
+              <span class="tag purple">SQLite3</span>
+              <span class="tag purple">MySQL</span>
+              <span class="tag purple">SQL</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">☕</div>
+            <div class="skill-name">Object-Oriented Programming</div>
+            <div class="skill-desc">
+              Writing structured and maintainable code using OOP principles
+              learned through coursework and real project experience.
+            </div>
+            <div class="skill-tags">
+              <span class="tag amber">Java</span>
+              <span class="tag amber">OOP</span>
+              <span class="tag amber">Data Structures</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">🔧</div>
+            <div class="skill-name">Tools &amp; Platforms</div>
+            <div class="skill-desc">
+              Using industry-standard tools for version control, code editing,
+              and cross-platform development workflows.
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">VS Code</span>
+              <span class="tag">macOS</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Windows</span>
+            </div>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">📐</div>
+            <div class="skill-name">CS Foundations</div>
+            <div class="skill-desc">
+              Grounded in the mathematical and theoretical foundations of CS —
+              from linear algebra to discrete math and algorithms.
+            </div>
+            <div class="skill-tags">
+              <span class="tag green">Linear Algebra</span>
+              <span class="tag green">Discrete Math</span>
+              <span class="tag green">Algorithms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-label">Projects</div>
+        <h2 class="section-title">Things I've built</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🍽️</div>
+              <span class="project-badge featured">Featured</span>
+            </div>
+            <div class="project-body">
+              <div class="project-name">Restaurant Finder App</div>
+              <div class="project-desc">
+                A web app that enhances the dining experience through
+                personalized recommendations based on city, cuisine, and price
+                range. Built with a mini database for fast search results and
+                recommendation algorithms tailored to user input. Developed in
+                collaboration with peers using agile practices and version
+                control.
+              </div>
+              <div class="project-stack">
+                <span class="tag">JavaScript</span>
+                <span class="tag green">Node.js</span>
+                <span class="tag purple">SQLite3</span>
+                <span class="tag">HTML/CSS</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span
+                style="
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 10px;
+                  color: var(--text3);
+                "
+                >Dec 2024 · Lassonde, York University</span
+              >
+              <a
+                href="https://github.com/HosseinGorji05"
+                target="_blank"
+                class="project-link"
+                >GitHub ↗</a
+              >
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🍕</div>
+              <span class="project-badge">Full-Stack</span>
+            </div>
+            <div class="project-body">
+              <div class="project-name">PizzaKolbe Restaurant Website</div>
+              <div class="project-desc">
+                Developed a fully responsive restaurant management platform
+                utilizing a Node.js and Express backend with SQLite3 for robust
+                data persistence. The system features a comprehensive user
+                authentication suite using bcrypt for secure password hashing,
+                alongside a personalized favorites system and dynamic menu
+                rendering. I engineered an interactive UI with seamless
+                navigation and implemented protected API endpoints to ensure
+                secure data handling. While the full version is currently slated
+                for public release, a production-ready iteration is successfully
+                deployed and in active use by a local pizza establishment.
+              </div>
+              <div class="project-stack">
+                <span class="tag green">Node.js</span>
+                <span class="tag green">Express</span>
+                <span class="tag purple">SQLite3</span>
+                <span class="tag">HTML/CSS/JS</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span
+                style="
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 10px;
+                  color: var(--text3);
+                "
+                >May 2025 · Ongoing</span
+              >
+              <a
+                href="https://github.com/HosseinGorji05"
+                target="_blank"
+                class="project-link"
+                >GitHub ↗</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" style="background: var(--bg2)">
+      <div class="container">
+        <div class="section-label">Experience</div>
+        <h2 class="section-title">Where I've worked</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-date">JULY 2023 — FEBRUARY 2025</div>
+            <div class="tl-role">Customer Service Associate</div>
+            <div class="tl-org">Metro — Toronto, ON</div>
+            <ul class="tl-bullets">
+              <li>
+                Collaborated with team members in a fast-paced retail
+                environment, demonstrating strong teamwork and reliability.
+              </li>
+              <li>
+                Gathered and communicated customer feedback to management,
+                contributing to service improvements.
+              </li>
+              <li>
+                Delivered excellent customer support by efficiently resolving
+                inquiries and managing transactions.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title">Let's connect</h2>
+        <div class="contact-grid">
+          <div class="contact-blurb">
+            <h3>Open to new opportunities</h3>
+            <p>
+              I'm currently looking for summer internships, co-ops, and
+              part-time roles in software or web development — anywhere I can
+              keep building and learning.
+            </p>
+            <br />
+            <p>
+              Whether you're a recruiter, a fellow developer, or just want to
+              chat about a project — feel free to reach out.
+            </p>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:hoseingорji1383@gmail.com" class="contact-link">
+              <div class="contact-link-icon">✉️</div>
+              <div>
+                <div class="contact-link-text">Email</div>
+                <div class="contact-link-sub">hoseingорji1383@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+14166624071" class="contact-link">
+              <div class="contact-link-icon">📞</div>
+              <div>
+                <div class="contact-link-text">Phone</div>
+                <div class="contact-link-sub">+1 416 662 4071</div>
+              </div>
+            </a>
+            <a
+              href="https://github.com/HosseinGorji05"
+              target="_blank"
+              class="contact-link"
+            >
+              <div class="contact-link-icon">🐙</div>
+              <div>
+                <div class="contact-link-text">GitHub</div>
+                <div class="contact-link-sub">github.com/HosseinGorji05</div>
+              </div>
+            </a>
+            <a
+              href="https://linkedin.com/in/hossein-gorji"
+              target="_blank"
+              class="contact-link"
+            >
+              <div class="contact-link-icon">💼</div>
+              <div>
+                <div class="contact-link-text">LinkedIn</div>
+                <div class="contact-link-sub">Hossein Gorji</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <span style="color: var(--accent)">// </span>Hossein Gorji · York
+        University CS · <span style="color: var(--accent)">2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

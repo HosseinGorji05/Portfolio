@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IronCore Rebar Co. | The Backbone of Every Structure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --charcoal: #1a1a1a;
+        --steel: #3d3d3d;
+        --off-white: #f2ede6;
+        --accent-orange: #e85d04;
+        --font-heading: "Bebas Neue", sans-serif;
+        --font-body: "Barlow", sans-serif;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--charcoal);
+        color: var(--off-white);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* --- Global Elements --- */
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      .btn {
+        display: inline-block;
+        background: var(--accent-orange);
+        color: white;
+        padding: 1rem 2.5rem;
+        text-decoration: none;
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+      }
+      .btn:hover {
+        transform: scale(1.05);
+        background: #ff6b00;
+      }
+
+      .section-label {
+        color: var(--accent-orange);
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      /* --- Navigation --- */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 1.5rem 0;
+        transition: var(--transition);
+      }
+      header.scrolled {
+        background: rgba(26, 26, 26, 0.95);
+        border-bottom: 2px solid var(--steel);
+        padding: 1rem 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        color: var(--off-white);
+        text-decoration: none;
+      }
+      .logo span {
+        color: var(--accent-orange);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--off-white);
+        text-decoration: none;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        transition: var(--transition);
+      }
+      .nav-links a:hover {
+        color: var(--accent-orange);
+      }
+
+      .mobile-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 2rem;
+      }
+
+      /* --- Hero --- */
+      .hero {
+        height: 100vh;
+        background:
+          linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)),
+          url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=2000")
+            center/cover;
+        display: flex;
+        align-items: center;
+        position: relative;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+      }
+      .hero-content h1 {
+        font-size: 6rem;
+        line-height: 0.9;
+        margin-bottom: 1rem;
+      }
+      .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: #ccc;
+        max-width: 600px;
+      }
+
+      /* --- About --- */
+      .section {
+        padding: 100px 0;
+        position: relative;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .diagonal-divider {
+        height: 150px;
+        background: var(--steel);
+        clip-path: polygon(0 50%, 100% 0, 100% 50%, 0 100%);
+        margin-top: -75px;
+      }
+
+      /* --- Products --- */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .product-card {
+        background: var(--steel);
+        padding: 2.5rem;
+        border-left: 0px solid var(--accent-orange);
+        transition: var(--transition);
+        position: relative;
+      }
+      .product-card:hover {
+        border-left: 8px solid var(--accent-orange);
+        transform: translateY(-10px);
+      }
+      .product-card h3 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+      }
+
+      /* --- Why Choose Us --- */
+      .why-us {
+        background: #111;
+        position: relative;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+      }
+      .feature-item i {
+        font-size: 3rem;
+        color: var(--accent-orange);
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      /* --- Form --- */
+      .form-container {
+        background: var(--steel);
+        padding: 4rem;
+        border: 1px solid #444;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-group label {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+      input,
+      select,
+      textarea {
+        padding: 1rem;
+        background: #2a2a2a;
+        border: 1px solid #444;
+        color: white;
+        font-family: var(--font-body);
+      }
+      input:focus {
+        outline: 2px solid var(--accent-orange);
+      }
+      .full-width {
+        grid-column: span 2;
+      }
+
+      /* --- FAQ --- */
+      .faq-item {
+        border-bottom: 1px solid #444;
+        padding: 1.5rem 0;
+        cursor: pointer;
+      }
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+      }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: var(--transition);
+        color: #aaa;
+        margin-top: 0;
+      }
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        margin-top: 1rem;
+      }
+
+      /* --- Footer --- */
+      footer {
+        background: #000;
+        padding: 80px 0 20px;
+        border-top: 4px solid var(--accent-orange);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 4rem;
+        margin-bottom: 4rem;
+      }
+      .map-placeholder {
+        background: #222;
+        height: 200px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* --- Animations --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.8s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 3.5rem;
+        }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--charcoal);
+          flex-direction: column;
+          padding: 2rem;
+          text-align: center;
+        }
+        .nav-links.active {
+          display: flex;
+        }
+        .mobile-toggle {
+          display: block;
+        }
+        .about-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .full-width {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <div class="container">
+        <nav>
+          <a href="#" class="logo">IRON<span>CORE</span></a>
+          <div class="mobile-toggle" id="menu-btn">☰</div>
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#why">Why Us</a></li>
+            <li><a href="#quote">Request Quote</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <span class="section-label">Structural Steel & Rebar</span>
+          <h1>THE BACKBONE OF<br />EVERY STRUCTURE</h1>
+          <p>
+            North America's premier supplier of mill-certified rebar and
+            precision fabrication services for mission-critical infrastructure.
+          </p>
+          <a href="#quote" class="btn">REQUEST A QUOTE</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid reveal">
+          <div>
+            <span class="section-label">01 — ABOUT US</span>
+            <h2 style="font-size: 3.5rem; margin-bottom: 2rem">
+              RELIABILITY FORGED IN STEEL
+            </h2>
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem">
+              Founded on the principles of technical precision and logistical
+              excellence, IronCore Rebar Co. has spent over two decades
+              supplying the skeletal strength for North America's most ambitious
+              projects.
+            </p>
+            <p>
+              We operate with a mission to eliminate project delays through
+              massive inventory holdings and automated fabrication. Every ton of
+              steel leaving our yards is fully compliant with ASTM and CSA
+              standards, ensuring your project meets spec—every single time.
+            </p>
+          </div>
+          <div
+            style="
+              background: var(--steel);
+              padding: 3rem;
+              border: 2px solid var(--accent-orange);
+            "
+          >
+            <h3 style="margin-bottom: 1rem">Certifications</h3>
+            <ul style="list-style: none">
+              <li style="margin-bottom: 0.5rem">• ASTM A615 (Carbon-Steel)</li>
+              <li style="margin-bottom: 0.5rem">
+                • ASTM A706 (Low-Alloy Steel)
+              </li>
+              <li style="margin-bottom: 0.5rem">• CSA G30.18 Certified</li>
+              <li style="margin-bottom: 0.5rem">• ISO 9001:2015 Registered</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="diagonal-divider"></div>
+
+    <section class="section" id="products">
+      <div class="container">
+        <span class="section-label">02 — PRODUCTS & SERVICES</span>
+        <h2 style="font-size: 3rem">ENGINEERED SOLUTIONS</h2>
+        <div class="products-grid">
+          <div class="product-card reveal">
+            <h3>Deformed Rebar</h3>
+            <p>
+              High-yield carbon steel rebar. Available in Grade 40, 60, and 75
+              to meet varied structural load requirements.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+          <div class="product-card reveal">
+            <h3>Epoxy-Coated</h3>
+            <p>
+              Superior corrosion resistance for bridge decks, parking
+              structures, and marine environments. Fusion-bonded coating.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+          <div class="product-card reveal">
+            <h3>Custom Fabrication</h3>
+            <p>
+              Precision shearing and bending using automated CNC equipment.
+              Fabricated to your exact shop drawings.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+          <div class="product-card reveal">
+            <h3>Galvanized Rebar</h3>
+            <p>
+              Hot-dip galvanized reinforcement for maximum lifecycle performance
+              in extremely harsh chemical environments.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+          <div class="product-card reveal">
+            <h3>Couplers & Accessories</h3>
+            <p>
+              Mechanical splicing systems, chairs, spacers, and tie wire. A
+              complete inventory for the placing crew.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+          <div class="product-card reveal">
+            <h3>Cut-to-Length</h3>
+            <p>
+              Eliminate job site waste with our custom cut-to-length service.
+              Bundled and tagged by project phase.
+            </p>
+            <a
+              href="#quote"
+              style="
+                color: var(--accent-orange);
+                text-decoration: none;
+                margin-top: 1.5rem;
+                display: inline-block;
+                font-weight: 600;
+              "
+              >GET QUOTE →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section why-us" id="why">
+      <div class="container">
+        <span class="section-label">03 — WHY IRONCORE</span>
+        <div class="features-grid reveal">
+          <div class="feature-item">
+            <h3>ON-TIME DELIVERY</h3>
+            <p>
+              Our logistics fleet ensures your steel arrives before the pour
+              begins. No downtime.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h3>MILL-CERTIFIED</h3>
+            <p>
+              Full traceability on every batch. Mill test reports provided with
+              every shipment.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h3>LARGE INVENTORY</h3>
+            <p>
+              Over 50,000 tons of stock maintained across our North American
+              hubs.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h3>TECH SUPPORT</h3>
+            <p>
+              Our engineers assist with detailing and shop drawing reviews to
+              optimize your steel.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quote">
+      <div class="container">
+        <span class="section-label">04 — PROJECT ESTIMATE</span>
+        <h2 style="font-size: 3rem; margin-bottom: 2rem">REQUEST A QUOTE</h2>
+        <div class="form-container reveal">
+          <form id="quoteForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required />
+              </div>
+              <div class="form-group">
+                <label>Company</label>
+                <input type="text" required />
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required />
+              </div>
+              <div class="form-group">
+                <label>Project Type</label>
+                <select>
+                  <option>Infrastructure</option>
+                  <option>Commercial</option>
+                  <option>Residential</option>
+                  <option>Industrial</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Rebar Grade</label>
+                <input type="text" placeholder="e.g. Grade 60" />
+              </div>
+              <div class="form-group">
+                <label>Quantity (Tons)</label>
+                <input type="number" required />
+              </div>
+              <div class="form-group full-width">
+                <label>Message / Specifications</label>
+                <textarea rows="5"></textarea>
+              </div>
+              <div class="full-width">
+                <button type="submit" class="btn">SUBMIT REQUEST</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="section-label">05 — FAQ</span>
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <div class="faq-question">
+              What are your typical lead times? <span>+</span>
+            </div>
+            <div class="faq-answer">
+              Stock orders ship within 48 hours. Custom fabrication typically
+              requires 5-10 business days depending on volume.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              Do you offer on-site technical support? <span>+</span>
+            </div>
+            <div class="faq-answer">
+              Yes, our technical team can be deployed to major project sites for
+              consultation on complex reinforcement detailing.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              What is your minimum order quantity? <span>+</span>
+            </div>
+            <div class="faq-answer">
+              We primarily serve industrial contracts with a 5-ton minimum,
+              though we accommodate smaller quantities for specialized
+              fabrication.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a href="#" class="logo">IRON<span>CORE</span></a>
+            <p style="margin-top: 1.5rem; color: #888">
+              Precision engineered structural reinforcement for North America's
+              infrastructure.
+            </p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1.5rem">Headquarters</h3>
+            <p>1200 Industrial Way<br />Steel City, PA 19101</p>
+            <p>Phone: (800) 555-IRON</p>
+            <p>Email: sales@ironcore-rebar.com</p>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1.5rem">Location</h3>
+            <div class="map-placeholder">[ GOOGLE MAP EMBED ]</div>
+          </div>
+        </div>
+        <div
+          style="
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #222;
+            font-size: 0.8rem;
+            color: #555;
+          "
+        >
+          &copy; 2026 IRONCORE REBAR CO. ALL RIGHTS RESERVED.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Header Scroll Effect
+      window.addEventListener("scroll", () => {
+        const header = document.getElementById("header");
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+
+      // Mobile Menu Toggle
+      const menuBtn = document.getElementById("menu-btn");
+      const navLinks = document.getElementById("nav-links");
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // FAQ Accordion
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          item.classList.toggle("active");
+        });
+      });
+
+      // Scroll Reveal Animation
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      // Form Submission
+      document.getElementById("quoteForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert(
+          "Quote request received. Our estimating team will contact you within 24 hours.",
+        );
+        e.target.reset();
+      });
+    </script>
+  </body>
+</html>
