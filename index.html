@@ -170,8 +170,8 @@
           top 0.6s ease;
       }
       html[data-planet="earth"] .planet-rotator {
-        left: 24%;
-        top: 38%;
+        left: 76%;
+        top: 36%;
       }
       .planet-img {
         position: absolute;
@@ -216,12 +216,12 @@
       html[data-planet="earth"] .planet-overlay {
         background:
           radial-gradient(
-            circle at 24% 38%,
+            circle at 76% 36%,
             rgba(40, 120, 220, 0.1) 0%,
             transparent 28%
           ),
           radial-gradient(
-            ellipse 65% 50% at 25% 40%,
+            ellipse 70% 55% at 75% 35%,
             rgba(40, 120, 220, 0.08) 0%,
             transparent 55%
           ),
@@ -235,6 +235,10 @@
 
       .mobile-theme-bar {
         display: none;
+      }
+      .mobile-nav-title {
+        display: none;
+        margin: 0;
       }
       .planet-picker-bar {
         display: flex;
@@ -1261,15 +1265,19 @@
           display: inline-flex;
         }
 
-        .nav-drawer {
-          display: none;
+        .nav-inner .nav-drawer {
+          display: none !important;
+        }
+
+        .nav-inner .nav-drawer.open {
+          display: flex !important;
           position: fixed;
           top: calc(56px + env(safe-area-inset-top));
           left: 0;
           right: 0;
-          bottom: calc(5.25rem + env(safe-area-inset-bottom));
+          bottom: 0;
+          width: 100%;
           margin: 0;
-          margin-left: 0;
           flex-direction: column;
           align-items: stretch;
           gap: 0;
@@ -1280,40 +1288,59 @@
           z-index: 500;
         }
 
-        .nav-drawer.open {
-          display: flex;
+        .mobile-nav-title {
+          display: block;
+          font-family: "JetBrains Mono", monospace;
+          font-size: 11px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: var(--accent);
+          padding: 1.25rem max(1.15rem, env(safe-area-inset-right)) 0.75rem
+            max(1.15rem, env(safe-area-inset-left));
+          margin: 0;
+          border-bottom: 1px solid var(--border);
+          flex-shrink: 0;
         }
 
-        .nav-links {
+        .nav-inner .nav-drawer.open .nav-links {
+          display: flex !important;
           flex: 1;
-          flex-direction: column;
+          flex-direction: column !important;
           gap: 0;
           width: 100%;
+          min-height: 0;
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
-          padding: 0.5rem max(1.15rem, env(safe-area-inset-right)) 0
+          padding: 0 max(1.15rem, env(safe-area-inset-right)) 0
             max(1.15rem, env(safe-area-inset-left));
+          list-style: none;
         }
 
-        .nav-links li {
+        .nav-inner .nav-drawer.open .nav-links li {
           width: 100%;
           border-bottom: 1px solid var(--border);
         }
 
-        .nav-links a {
-          display: block;
-          padding: 1.05rem 0;
-          font-size: 13px;
-          min-height: 48px;
-          display: flex;
+        .nav-inner .nav-drawer.open .nav-links a {
+          display: flex !important;
           align-items: center;
+          width: 100%;
+          padding: 1.1rem 0;
+          font-size: 14px;
+          color: var(--text);
+          min-height: 48px;
         }
 
-        .nav-drawer-footer {
+        .nav-inner .nav-drawer.open .nav-links a:hover,
+        .nav-inner .nav-drawer.open .nav-links a:active {
+          color: var(--accent);
+        }
+
+        .nav-inner .nav-drawer.open .nav-drawer-footer {
+          display: flex !important;
           flex-direction: column;
           align-items: stretch;
-          gap: 0;
-          margin-top: 0;
+          flex-shrink: 0;
           padding: 1rem max(1.15rem, env(safe-area-inset-right))
             max(1rem, env(safe-area-inset-left));
           border-top: 1px solid var(--border);
@@ -1338,38 +1365,44 @@
         .mobile-theme-bar {
           display: flex;
           position: fixed;
-          left: 0;
-          right: 0;
-          bottom: 0;
+          left: max(1rem, env(safe-area-inset-left));
+          right: auto;
+          bottom: max(1rem, env(safe-area-inset-bottom));
           z-index: 200;
-          justify-content: center;
+          flex-direction: row;
           align-items: center;
-          gap: 1.5rem;
-          padding: 0.65rem max(1.25rem, env(safe-area-inset-left))
-            max(0.75rem, env(safe-area-inset-bottom))
-            max(1.25rem, env(safe-area-inset-right));
-          background: var(--nav-bg);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-top: 1px solid var(--border);
-          box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
-          pointer-events: auto;
+          gap: 0.75rem;
+          padding: 0;
+          margin: 0;
+          background: none;
+          border: none;
+          box-shadow: none;
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+          pointer-events: none;
           touch-action: manipulation;
         }
 
-        .mobile-theme-bar .planet-theme-btn {
-          width: 3.25rem;
-          height: 3.25rem;
-          min-width: 3.25rem;
-          min-height: 3.25rem;
+        .mobile-theme-bar .mobile-planet-switch {
+          display: none;
+          width: 3rem;
+          height: 3rem;
+          min-width: 3rem;
+          min-height: 3rem;
+          pointer-events: auto;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
         }
 
-        .mobile-theme-bar .planet-theme-btn.active {
-          transform: scale(1.06);
+        html[data-planet="mars"] .mobile-theme-bar [data-planet="earth"] {
+          display: block;
+        }
+
+        html[data-planet="earth"] .mobile-theme-bar [data-planet="mars"] {
+          display: block;
         }
 
         body {
-          padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+          padding-bottom: max(2rem, env(safe-area-inset-bottom));
         }
 
         body.menu-open {
@@ -1574,7 +1607,8 @@
         }
 
         footer {
-          padding-bottom: max(3.5rem, calc(2rem + env(safe-area-inset-bottom)));
+          padding-bottom: max(5rem, calc(2rem + env(safe-area-inset-bottom)));
+          padding-left: max(5.5rem, calc(1.15rem + env(safe-area-inset-left)));
           font-size: 11px;
           line-height: 1.6;
         }
@@ -1630,6 +1664,7 @@
           <span class="nav-toggle-bars" aria-hidden="true"></span>
         </button>
         <div class="nav-drawer" id="nav-drawer">
+          <p class="mobile-nav-title">Sections</p>
           <ul class="nav-links" id="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#highlights">Highlights</a></li>
@@ -1673,26 +1708,20 @@
       </div>
     </nav>
 
-    <div
-      class="mobile-theme-bar"
-      role="group"
-      aria-label="Planet background theme"
-    >
+    <div class="mobile-theme-bar" aria-label="Switch planet theme">
       <button
         type="button"
-        class="planet-theme-btn"
+        class="planet-theme-btn mobile-planet-switch"
         data-planet="earth"
-        aria-label="Earth theme"
-        aria-pressed="false"
+        aria-label="Switch to Earth theme"
       >
         <img src="earth.jpg" alt="" width="52" height="52" decoding="async" />
       </button>
       <button
         type="button"
-        class="planet-theme-btn active"
+        class="planet-theme-btn mobile-planet-switch"
         data-planet="mars"
-        aria-label="Mars theme"
-        aria-pressed="true"
+        aria-label="Switch to Mars theme"
       >
         <img src="mars.jpg" alt="" width="52" height="52" decoding="async" />
       </button>
@@ -2313,6 +2342,7 @@ app.get('/restaurants', async (req, res) => {
             localStorage.setItem(STORAGE_KEY, theme);
           } catch (e) {}
           buttons.forEach(function (btn) {
+            if (btn.classList.contains("mobile-planet-switch")) return;
             const active = btn.getAttribute("data-planet") === theme;
             btn.classList.toggle("active", active);
             btn.setAttribute("aria-pressed", active ? "true" : "false");
