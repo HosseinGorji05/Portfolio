@@ -1,0 +1,341 @@
+.lab-root {
+  min-height: 420px;
+}
+
+.lab-fallback {
+  color: var(--text2);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+}
+
+.lab-grid-single {
+  grid-template-columns: 1fr;
+  max-width: 760px;
+}
+
+.lab-card {
+  background: rgba(26, 31, 46, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.lab-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.lab-subtitle {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: "JetBrains Mono", monospace;
+  margin-bottom: 1rem;
+}
+
+.incident-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.metric-chip {
+  background: rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+}
+
+.metric-label {
+  display: block;
+  font-size: 10px;
+  color: var(--text3);
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.metric-value {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.incident-events,
+.incident-actions {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.incident-events h4,
+.incident-actions h4,
+.incident-log h4 {
+  margin-bottom: 0.6rem;
+  font-size: 12px;
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.event-row:last-child {
+  border-bottom: none;
+}
+
+.event-text {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.event-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+}
+
+.event-badge.open {
+  color: #ff6e6e;
+  border-color: rgba(255, 110, 110, 0.4);
+}
+
+.event-badge.resolved {
+  color: var(--green);
+  border-color: rgba(0, 214, 143, 0.35);
+}
+
+.action-btn {
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 0.55rem;
+  cursor: pointer;
+}
+
+.action-btn:last-child {
+  margin-bottom: 0;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.incident-log {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.incident-log ul {
+  list-style: none;
+}
+
+.incident-log li {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--text2);
+  padding: 0.2rem 0;
+}
+
+.chat-thread {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.8rem;
+  height: 330px;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.16);
+  margin-bottom: 0.8rem;
+}
+
+.chat-msg {
+  max-width: 90%;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.6rem;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chat-msg.assistant {
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.22);
+  color: var(--text);
+}
+
+.chat-msg.user {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border2);
+}
+
+.chat-compose {
+  display: flex;
+  gap: 0.55rem;
+}
+
+.chat-compose input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.75rem 0.8rem;
+  font-size: 13px;
+}
+
+.chat-compose button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0 0.9rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.quick-prompt-btn {
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.4rem 0.65rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.quick-prompt-btn:hover {
+  background: rgba(var(--accent-rgb), 0.2);
+}
+
+@media (max-width: 768px) {
+  .lab-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .chat-thread {
+    height: 240px;
+  }
+}
+
+.chat-nudge {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 700;
+  max-width: 330px;
+  background: rgba(10, 12, 15, 0.95);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  padding: 0.85rem 0.9rem;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.chat-nudge.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.chat-nudge-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.chat-nudge-text {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 0.7rem;
+  line-height: 1.5;
+}
+
+.chat-nudge-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-nudge-btn {
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.chat-nudge-btn.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .chat-nudge {
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: calc(5.3rem + env(safe-area-inset-bottom, 0px));
+    max-width: none;
+  }
+}

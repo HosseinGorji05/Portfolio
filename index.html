@@ -60,6 +60,7 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./lab.css" />
     <style>
       :root {
         --text: #e8edf5;
@@ -1708,6 +1709,7 @@
             <li><a href="#highlights">Highlights</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
+            <li><a href="#lab">Lab</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -1753,6 +1755,7 @@
         <li><a href="#highlights">Highlights</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#lab">Lab</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -2193,6 +2196,16 @@ app.get('/restaurants', async (req, res) => {
       </div>
     </section>
 
+    <section id="lab" class="section-panel">
+      <div class="container">
+        <div class="section-label">Interactive Lab</div>
+        <h2 class="section-title">AI Concierge</h2>
+        <div id="innovation-lab-root" class="lab-root">
+          <p class="lab-fallback">Loading interactive demo...</p>
+        </div>
+      </div>
+    </section>
+
     <section id="experience" class="section-panel">
       <div class="container">
         <div class="section-label">Experience</div>
@@ -2313,6 +2326,16 @@ app.get('/restaurants', async (req, res) => {
         University CS · <span style="color: var(--accent)">2026</span>
       </div>
     </footer>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="./lab.js" defer></script>
 
     <script>
       (function () {
@@ -2475,6 +2498,7 @@ app.get('/restaurants', async (req, res) => {
         window.addEventListener("resize", updateRotation);
         updateRotation();
       })();
+
     </script>
   </body>
 </html>
