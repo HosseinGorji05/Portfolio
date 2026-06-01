@@ -321,8 +321,8 @@
 
         .planet-picker-bar {
           gap: 0.85rem;
-          margin-left: 1.5rem;
-          padding-left: 1.5rem;
+          margin-left: 0.8rem;
+          padding-left: 0.8rem;
           border-left: 1px solid var(--border);
         }
 
@@ -1732,7 +1732,13 @@
               aria-label="Earth theme"
               aria-pressed="false"
             >
-              <img src="earth.jpg" alt="" width="40" height="40" decoding="async" />
+              <img
+                src="earth.jpg"
+                alt=""
+                width="40"
+                height="40"
+                decoding="async"
+              />
             </button>
             <button
               type="button"
@@ -1741,7 +1747,13 @@
               aria-label="Mars theme"
               aria-pressed="true"
             >
-              <img src="mars.jpg" alt="" width="40" height="40" decoding="async" />
+              <img
+                src="mars.jpg"
+                alt=""
+                width="40"
+                height="40"
+                decoding="async"
+              />
             </button>
           </div>
         </div>
@@ -1789,10 +1801,6 @@
         <div class="photo"><img src="hossein.png" alt="Hossein Gorji" /></div>
 
         <div class="hero-content">
-          <div class="status-badge">
-            <span class="status-dot"></span>
-            Open to internships &amp; co-ops
-          </div>
           <div class="hero-tag">
             Computer Science · 3rd Year · York University
           </div>
@@ -2056,6 +2064,51 @@ app.get('/restaurants', async (req, res) => {
         <div class="section-label">Projects</div>
         <h2 class="section-title">Selected projects</h2>
         <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🚨</div>
+              <span class="project-badge featured">GIS / Data</span>
+            </div>
+            <div class="project-body">
+              <div class="project-name">Delatio</div>
+              <div class="project-impact amber">
+                GIS & Data Engineer · GeoPandas · NVIDIA Spark Hack Toronto
+              </div>
+              <div class="project-desc">
+                Data & GIS Engineer for a local-first emergency intelligence
+                platform on the NVIDIA GB10. Loaded four Toronto Open Data
+                datasets—hydrants, RentSafeTO buildings, street centrelines, and
+                311 requests—into memory with GeoPandas and R-tree indexing
+                (UTM). Built query APIs for nearest hydrants, building safety,
+                street name, and ward-level 311 history so the Localizer
+                surfaces dispatch context in under 20 ms per incident.
+              </div>
+              <div class="project-stack">
+                <span class="tag">Python</span>
+                <span class="tag green">GeoPandas</span>
+                <span class="tag purple">Pandas</span>
+                <span class="tag">Toronto Open Data</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span
+                style="
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 10px;
+                  color: var(--text3);
+                "
+                >May 2026 · NVIDIA Spark Hack Toronto</span
+              >
+              <a
+                href="https://github.com/AdrianShah/NVIDIA-SparkHacks"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link"
+                >View on GitHub ↗</a
+              >
+            </div>
+          </div>
+
           <div class="project-card">
             <div class="project-header">
               <div class="project-icon">🥥🌴</div>
@@ -2391,7 +2444,10 @@ app.get('/restaurants', async (req, res) => {
             document.documentElement.scrollHeight - window.innerHeight;
           const progress =
             scrollMax > 0 ? Math.min(1, window.scrollY / scrollMax) : 0;
-          rotator.style.setProperty("--planet-rotation", progress * 720 + "deg");
+          rotator.style.setProperty(
+            "--planet-rotation",
+            progress * 720 + "deg",
+          );
         }
 
         function setMenuOpen(open) {
@@ -2413,11 +2469,13 @@ app.get('/restaurants', async (req, res) => {
           setMenuOpen(!mobileMenu.classList.contains("open"));
         });
 
-        mobileMenu.querySelectorAll(".mobile-menu-links a").forEach(function (link) {
-          link.addEventListener("click", function () {
-            setMenuOpen(false);
+        mobileMenu
+          .querySelectorAll(".mobile-menu-links a")
+          .forEach(function (link) {
+            link.addEventListener("click", function () {
+              setMenuOpen(false);
+            });
           });
-        });
 
         window.addEventListener("resize", function () {
           if (!isMobile()) setMenuOpen(false);
@@ -2498,7 +2556,6 @@ app.get('/restaurants', async (req, res) => {
         window.addEventListener("resize", updateRotation);
         updateRotation();
       })();
-
     </script>
   </body>
 </html>
