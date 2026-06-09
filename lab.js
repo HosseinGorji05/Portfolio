@@ -11,9 +11,9 @@
   }
 
   function showChatNudge() {
-    var NUDGE_KEY = "portfolio-chat-nudge-v1-session-dismissed";
+    var key = "portfolio-chat-nudge-v1-session-dismissed";
     try {
-      if (sessionStorage.getItem(NUDGE_KEY) === "true") return;
+      if (sessionStorage.getItem(key) === "true") return;
     } catch (e) {}
 
     var nudge = document.createElement("div");
@@ -35,7 +35,7 @@
       }, 220);
       if (markSeen) {
         try {
-          sessionStorage.setItem(NUDGE_KEY, "true");
+          sessionStorage.setItem(key, "true");
         } catch (e) {}
       }
     }
@@ -54,7 +54,7 @@
 
     setTimeout(function () {
       nudge.classList.add("show");
-    }, 950);
+    }, 900);
   }
 
   function composeConciergeReply(prompt) {
@@ -63,44 +63,44 @@
 
     var intents = [
       {
-        keys: ["incident", "outage", "latency", "error", "queue", "metrics", "status", "simulate"],
+        keys: ["kolbeh", "restaurant", "production", "deploy", "deployed", "real user", "live app", "freelance", "qr"],
         answer:
-          "I recently had an incident simulation demo in this lab, but this portfolio is now focused on the AI concierge. I can still walk you through how I debug production issues and prioritize fixes.",
+          "Kolbeh is my production restaurant platform (May 2025–Present) for a family business in Iran, used via QR-code menu scanning. It uses Node.js, Express, SQLite3, bcrypt auth, role-based access, favorites, and secured REST APIs with parameterized queries and CORS.",
       },
       {
-        keys: ["restaurant", "production", "deploy", "deployed", "real user", "live app", "pizza"],
+        keys: ["delatio", "nvidia", "edge", "geopandas", "gis", "spark"],
         answer:
-          "My strongest project is a restaurant management platform deployed for a local business. It includes authentication, protected API routes, menu rendering, favorites, and persistent data with SQLite3.",
+          "At NVIDIA Spark Hack Toronto (May 2026), I co-developed Delatio — a local-first edge-compute urban risk intelligence platform on a Grace Blackwell GB100 node with dual AI loops, GeoPandas spatial queries under 20 ms, and zero cloud dependencies.",
       },
       {
         keys: ["potluck", "hackathon", "firebase", "ui", "ux", "team", "lead"],
         answer:
-          "At CTRL+HACK+DEL, I worked as Lead UI/UX Developer and Git specialist on Potluckio. I focused on interface quality, collaboration flow, and real-time item coordination with Firebase.",
+          "At CTRL+HACK+DEL (Feb 2026), I was Lead UI/UX Developer and Git specialist on Potluckio — a real-time group meal-planning app with live item-claiming via Firebase Firestore. I owned frontend design and Git workflow for a two-person team.",
       },
       {
         keys: ["stack", "tech", "technologies", "tools", "backend", "frontend", "database"],
         answer:
-          "Core stack: JavaScript, Node.js, Express, REST APIs, SQLite/MySQL, Firebase, HTML/CSS, Git, and GitHub workflows. I work across full-stack architecture and delivery.",
+          "Core stack: JavaScript, Python, Node.js, Express, REST APIs, SQLite3/MySQL, Firebase Firestore, React, GeoPandas/GIS, Docker, Git/GitHub, and Linux. I work across full-stack and data-driven projects.",
       },
       {
         keys: ["project", "projects", "built", "build", "portfolio", "work"],
         answer:
-          "I have three highlighted builds: Potluckio (hackathon real-time app), Restaurant Finder (team project with recommendations), and a production restaurant platform used by a local business.",
+          "Three highlighted projects: Delatio (NVIDIA edge-compute hackathon, May 2026), Potluckio (real-time meal planning, Feb 2026), and Kolbeh (production restaurant platform, May 2025–Present).",
       },
       {
         keys: ["intern", "internship", "co-op", "coop", "hire", "hiring", "available", "opportunity"],
         answer:
-          "I am actively seeking Summer 2026 internships/co-ops in software development, and I can contribute across frontend, backend, debugging, and team collaboration.",
+          "I am seeking a Winter 2027 software development internship and can contribute across frontend, backend, debugging, and team collaboration in the Greater Toronto Area.",
       },
       {
-        keys: ["contact", "email", "linkedin", "reach", "call", "phone"],
+        keys: ["contact", "email", "linkedin", "reach", "call", "phone", "message"],
         answer:
           "Contact me at hoseingorji1383@gmail.com, +1 416 662 4071, or linkedin.com/in/hossein-gorji-745488281.",
       },
       {
         keys: ["hello", "hi", "hey", "who are you", "introduce", "about you"],
         answer:
-          "I am Hossein's AI concierge. I can summarize his projects, stack, experience, and hiring availability.",
+          "I am Hossein's AI concierge. I can summarize projects, stack, experience, and hiring availability.",
       },
     ];
 
@@ -114,28 +114,21 @@
       }
     });
 
-    if (best && best.score > 0) {
-      return typeof best.intent.answer === "function"
-        ? best.intent.answer()
-        : best.intent.answer;
-    }
+    if (best && best.score > 0) return best.intent.answer;
 
     return (
-      "I can help with projects, tech stack, production deployment, internship availability, or contact details. " +
-      "Try: 'What did you deploy in production?'"
+      "I can help with projects, tech stack, deployment details, internships, or contact info. " +
+      "Try: 'How can I contact you?'"
     );
   }
 
   function bootLab() {
     var mount = document.getElementById("innovation-lab-root");
-    if (!mount || !window.React || !window.ReactDOM || mount.dataset.mounted === "true") {
-      return;
-    }
+    if (!mount || !window.React || !window.ReactDOM || mount.dataset.mounted === "true") return;
     mount.dataset.mounted = "true";
 
     var h = React.createElement;
     var useState = React.useState;
-
     var QUICK_PROMPTS = [
       "What did you deploy in production?",
       "What is your stack?",
@@ -147,7 +140,7 @@
       var _useState = useState([
           {
             role: "assistant",
-            text: "Hi, I am Hossein's AI Concierge. Ask me about projects, stack, internships, or how to contact Hossein.",
+            text: "Hi, I am Hossein's AI Concierge. Ask about projects, stack, internships, or contact details.",
           },
         ]),
         messages = _useState[0],
@@ -181,7 +174,11 @@
           "div",
           { className: "lab-card" },
           h("h3", null, "AI Concierge"),
-          h("p", { className: "lab-subtitle" }, "Ask about projects, stack, internships, and how to contact Hossein."),
+          h(
+            "p",
+            { className: "lab-subtitle" },
+            "Ask about projects, stack, internships, and how to contact Hossein.",
+          ),
           h(
             "div",
             { className: "quick-prompts" },
@@ -212,7 +209,7 @@
             { className: "chat-compose" },
             h("input", {
               value: input,
-              placeholder: "Ask: What did you deploy? How do you debug incidents?",
+              placeholder: "Ask: What did you deploy? How can I contact you?",
               onChange: function (event) {
                 setInput(event.target.value);
               },

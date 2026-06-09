@@ -9,12 +9,12 @@
     <title>Hossein Gorji — Full-Stack Developer · Open to Internships</title>
     <meta
       name="description"
-      content="Hossein Gorji — 2nd-year CS student at York University. Full-stack developer with production apps, hackathon projects, and Node.js/Express/SQLite experience. Open to internships & co-ops in Toronto."
+      content="Hossein Gorji — Full-stack developer shipping real-world applications, from live restaurant platforms to edge-compute systems recognized at NVIDIA hackathons. BSc CS (Honours) @ York University. Seeking Winter 2027 internship."
     />
     <meta property="og:title" content="Hossein Gorji — Full-Stack Developer" />
     <meta
       property="og:description"
-      content="CS @ York University · Production web apps · Open to internships Summer 2026"
+      content="CS @ York University · Production web apps · NVIDIA hackathon · Open to Winter 2027 internship"
     />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#0a0c0f" />
@@ -1816,10 +1816,10 @@
             >
           </h1>
           <p class="hero-sub">
-            2nd-year Computer Science student (Honours) at York University,
-            Toronto. I design and develop full-stack web applications with
-            production deployments, collaborative team experience, and a focus
-            on secure backends, relational databases, and responsive interfaces.
+            Full-stack developer shipping real-world applications — from live
+            restaurant platforms to edge-compute systems recognized at NVIDIA
+            hackathons. BSc Computer Science (Honours) at York University,
+            Toronto. Seeking Winter 2027 internship.
           </p>
           <div class="hero-ctas">
             <a href="hosseinupdated.pdf" class="btn btn-primary" download
@@ -1836,17 +1836,14 @@
           </div>
         </div>
         <pre class="hero-gfx">
-app.get('/restaurants', async (req, res) => {
-  const { city, cuisine, price } = req.query;
-  const results = await db.all(
-    `SELECT * FROM restaurants
-     WHERE city = ?
-     AND cuisine = ?
-     AND price_range <= ?
-     ORDER BY rating DESC`,
-    [city, cuisine, price]
+app.get('/api/menu', async (req, res) => {
+  const items = await db.all(
+    `SELECT id, name, price, category
+     FROM menu_items
+     WHERE active = 1
+     ORDER BY category, name`
   );
-  res.json({ data: results });
+  res.json({ data: items });
 });</pre
         >
       </div>
@@ -1858,7 +1855,7 @@ app.get('/restaurants', async (req, res) => {
           <div class="summary-item highlight">
             <span class="summary-dot" aria-hidden="true"></span>
             <span
-              ><strong>Available</strong> — Winter/Summer 2027 internships &amp;
+              ><strong>Available</strong> — Winter 2027 internship &amp;
               co-ops</span
             >
           </div>
@@ -1875,7 +1872,7 @@ app.get('/restaurants', async (req, res) => {
           <div class="summary-item">
             <span class="summary-dot" aria-hidden="true"></span>
             <span
-              ><strong>Production deployment</strong> · Restaurant
+              ><strong>Production deployment</strong> · Kolbeh restaurant
               platform</span
             >
           </div>
@@ -1892,27 +1889,28 @@ app.get('/restaurants', async (req, res) => {
             <div class="highlight-metric green">Production</div>
             <div class="highlight-title">Deployed applications</div>
             <div class="highlight-desc">
-              Built and maintain a full-stack restaurant management platform in
-              active use by a local business, including authentication, menu
-              management, and order workflows.
+              Built and maintain Kolbeh, a full-stack restaurant platform in
+              active use by a family business in Iran — QR-code menus, 30+
+              items, authentication, role-based access, and favorites.
             </div>
           </div>
           <div class="highlight-card">
             <div class="highlight-metric purple">Leadership</div>
             <div class="highlight-title">Team &amp; project delivery</div>
             <div class="highlight-desc">
-              Served as Lead UI/UX Developer and Git specialist on Potluckio at
-              CTRL+HACK+DEL, delivering a real-time collaborative application
-              with Firebase under hackathon timelines.
+              Co-developed Delatio at NVIDIA Spark Hack Toronto — a local-first
+              edge-compute platform on a Grace Blackwell GB100 node. Led UI/UX
+              and Git on Potluckio at CTRL+HACK+DEL with Firebase Firestore.
             </div>
           </div>
           <div class="highlight-card">
             <div class="highlight-metric">Full-stack</div>
             <div class="highlight-title">End-to-end development</div>
             <div class="highlight-desc">
-              Experienced across the stack: REST APIs, secure authentication
-              (bcrypt), SQLite/MySQL databases, and responsive front-end
-              interfaces built with modern JavaScript.
+              Experienced across the stack: REST APIs, bcrypt authentication,
+              parameterized queries, CORS policies, SQLite/MySQL/Firestore
+              databases, and responsive front-end interfaces with React and
+              modern JavaScript.
             </div>
           </div>
         </div>
@@ -1926,21 +1924,22 @@ app.get('/restaurants', async (req, res) => {
         <div class="about-grid">
           <div class="about-text">
             <p>
-              I am Hossein Gorji, a 2nd-year Computer Science student in the
-              Honours program at York University, based in Toronto. My work
-              focuses on full-stack web development, backend systems, and
-              data-driven application design.
+              I am Hossein Gorji, a Computer Science student in the Honours
+              program at York University, based in Toronto. I ship full-stack
+              web applications — from production restaurant platforms to
+              edge-compute systems built at NVIDIA hackathons.
             </p>
             <p>
-              I have delivered production software for a local business, led
-              front-end and version-control responsibilities on a hackathon
-              team, and built academic and personal projects using agile
-              collaboration and industry-standard tooling.
+              Recent work includes Kolbeh, a deployed restaurant site used via
+              QR-code menu scanning; Delatio, a local-first urban risk
+              intelligence platform on NVIDIA Grace Blackwell hardware; and
+              Potluckio, a real-time meal-planning app where I owned frontend
+              design and Git workflow for a two-person team.
             </p>
             <p>
-              I am seeking software development internships and co-op
-              opportunities where I can contribute reliable engineering, learn
-              from experienced teams, and continue growing as a developer.
+              I am seeking a Winter 2027 software development internship where I
+              can contribute reliable engineering, learn from experienced teams,
+              and continue growing as a developer.
             </p>
           </div>
           <div>
@@ -1959,7 +1958,7 @@ app.get('/restaurants', async (req, res) => {
               </div>
               <div class="stat-box">
                 <div class="stat-num">3</div>
-                <div class="stat-label">Full-stack projects</div>
+                <div class="stat-label">Highlighted projects</div>
               </div>
             </div>
           </div>
@@ -1973,31 +1972,38 @@ app.get('/restaurants', async (req, res) => {
         <h2 class="section-title">Technical skills</h2>
         <div class="skills-grid">
           <div class="skill-card">
-            <div class="skill-icon">🌐</div>
-            <div class="skill-name">Frontend Development</div>
+            <div class="skill-icon">💻</div>
+            <div class="skill-name">Languages</div>
             <div class="skill-desc">
-              Building responsive, interactive UIs with smooth navigation and
-              dynamic elements, optimized across all devices.
+              Core programming languages for web, systems, and data work across
+              coursework and production projects.
             </div>
             <div class="skill-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
+              <span class="tag">JavaScript (ES6+)</span>
+              <span class="tag">Python</span>
+              <span class="tag">Java</span>
+              <span class="tag">C</span>
+              <span class="tag">Bash</span>
+              <span class="tag">SQL</span>
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
             </div>
           </div>
 
           <div class="skill-card">
             <div class="skill-icon">⚙️</div>
-            <div class="skill-name">Backend Development</div>
+            <div class="skill-name">Backend &amp; APIs</div>
             <div class="skill-desc">
-              Developing server-side APIs with Node.js and Express, including
-              user authentication, protected endpoints, and routing.
+              Server-side development with secure authentication, CRUD
+              endpoints, and input validation for production REST APIs.
             </div>
             <div class="skill-tags">
               <span class="tag green">Node.js</span>
-              <span class="tag green">Express</span>
-              <span class="tag green">bcrypt</span>
+              <span class="tag green">Express.js</span>
               <span class="tag green">REST APIs</span>
+              <span class="tag green">bcrypt</span>
+              <span class="tag green">CORS</span>
+              <span class="tag green">Input Sanitization</span>
             </div>
           </div>
 
@@ -2005,44 +2011,48 @@ app.get('/restaurants', async (req, res) => {
             <div class="skill-icon">🗄️</div>
             <div class="skill-name">Databases</div>
             <div class="skill-desc">
-              Designing and querying relational databases for persistent
-              storage, retrieval, and search functionality.
+              Relational schema design and querying for persistent storage, plus
+              real-time data with Firebase Firestore.
             </div>
             <div class="skill-tags">
               <span class="tag purple">SQLite3</span>
               <span class="tag purple">MySQL</span>
-              <span class="tag purple">SQL</span>
+              <span class="tag purple">Firebase Firestore</span>
+              <span class="tag purple">Relational Schema Design</span>
             </div>
           </div>
 
           <div class="skill-card">
-            <div class="skill-icon">☕</div>
-            <div class="skill-name">Object-Oriented Programming</div>
+            <div class="skill-icon">🌐</div>
+            <div class="skill-name">Frontend</div>
             <div class="skill-desc">
-              Writing structured and maintainable code using OOP principles
-              learned through coursework and real project experience.
+              Responsive interfaces with modern layout techniques and async data
+              fetching for interactive web applications.
             </div>
             <div class="skill-tags">
-              <span class="tag amber">Java</span>
-              <span class="tag amber">OOP</span>
-              <span class="tag amber">Data Structures</span>
+              <span class="tag amber">React</span>
+              <span class="tag amber">Responsive Design</span>
+              <span class="tag amber">CSS Flexbox/Grid</span>
+              <span class="tag amber">Fetch API</span>
             </div>
           </div>
 
           <div class="skill-card">
             <div class="skill-icon">🔧</div>
-            <div class="skill-name">Tools &amp; Platforms</div>
+            <div class="skill-name">Infrastructure &amp; Tools</div>
             <div class="skill-desc">
-              Using industry-standard tools for version control, code editing,
-              and cross-platform development workflows.
+              Version control, containerization, GIS tooling, and development
+              environments for full-stack and data projects.
             </div>
             <div class="skill-tags">
+              <span class="tag">Docker</span>
               <span class="tag">Git</span>
               <span class="tag">GitHub</span>
-              <span class="tag">VS Code</span>
-              <span class="tag">macOS</span>
               <span class="tag">Linux</span>
-              <span class="tag">Windows</span>
+              <span class="tag">GeoPandas</span>
+              <span class="tag">GIS</span>
+              <span class="tag">npm</span>
+              <span class="tag">VS Code</span>
             </div>
           </div>
 
@@ -2050,13 +2060,15 @@ app.get('/restaurants', async (req, res) => {
             <div class="skill-icon">📐</div>
             <div class="skill-name">CS Foundations</div>
             <div class="skill-desc">
-              Grounded in the mathematical and theoretical foundations of CS —
-              from linear algebra to discrete math and algorithms.
+              Coursework in algorithms, architecture, and mathematical
+              foundations supporting systems and software design.
             </div>
             <div class="skill-tags">
+              <span class="tag green">Data Structures &amp; Algorithms</span>
+              <span class="tag green">Computer Architecture</span>
+              <span class="tag green">OOP (Java)</span>
               <span class="tag green">Linear Algebra</span>
-              <span class="tag green">Discrete Math</span>
-              <span class="tag green">Algorithms</span>
+              <span class="tag green">Discrete Mathematics</span>
             </div>
           </div>
         </div>
@@ -2076,22 +2088,24 @@ app.get('/restaurants', async (req, res) => {
             <div class="project-body">
               <div class="project-name">Delatio</div>
               <div class="project-impact amber">
-                GIS & Data Engineer · GeoPandas · NVIDIA Spark Hack Toronto
+                Co-Developer · Edge Compute · NVIDIA Spark Hack Toronto
               </div>
               <div class="project-desc">
-                Data & GIS Engineer for a local-first emergency intelligence
-                platform on the NVIDIA GB10. Loaded four Toronto Open Data
-                datasets—hydrants, RentSafeTO buildings, street centrelines, and
-                311 requests—into memory with GeoPandas and R-tree indexing
-                (UTM). Built query APIs for nearest hydrants, building safety,
-                street name, and ward-level 311 history so the Localizer
-                surfaces dispatch context in under 20 ms per incident.
+                Co-built a local-first edge-compute urban risk intelligence
+                platform running dual proactive/reactive AI loops on a single
+                NVIDIA Grace Blackwell GB100 node with zero cloud dependencies.
+                Engineered a GIS data layer optimizing Toronto Open Data into an
+                in-memory GeoPandas structure and implemented spatial queries
+                for an autonomous agent with &lt;20 ms response time — enabling
+                data privacy and operational reliability for civic emergency
+                response without external API calls.
               </div>
               <div class="project-stack">
                 <span class="tag">Python</span>
                 <span class="tag green">GeoPandas</span>
-                <span class="tag purple">Pandas</span>
+                <span class="tag purple">GIS</span>
                 <span class="tag">Toronto Open Data</span>
+                <span class="tag">Edge Compute</span>
               </div>
             </div>
             <div class="project-footer">
@@ -2110,6 +2124,13 @@ app.get('/restaurants', async (req, res) => {
                 class="project-link"
                 >View on GitHub ↗</a
               >
+              <a
+                href="https://www.youtube.com/watch?v=CmYIwBjBeI4"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link"
+                >View on Youtube ↗</a
+              >
             </div>
           </div>
 
@@ -2121,14 +2142,13 @@ app.get('/restaurants', async (req, res) => {
             <div class="project-body">
               <div class="project-name">Potluckio</div>
               <div class="project-impact purple">
-                Lead UI/UX · Firebase · CTRL+HACK+DEL Hackathon
+                Lead UI/UX Developer &amp; Git Specialist · CTRL+HACK+DEL
               </div>
               <div class="project-desc">
-                Lead UI/UX Developer and Git specialist for a collaborative
-                potluck planning application. Designed the interface, managed
-                repository workflow, and implemented real-time item claiming
-                with Firebase Firestore so guests can coordinate contributions
-                efficiently.
+                Built a real-time group meal-planning web app with live
+                item-claiming via Firebase Firestore. Sole owner of frontend
+                design and Git workflow for a two-person team; delivered a
+                functional, demo-able product within the hackathon deadline.
               </div>
               <div class="project-stack">
                 <span class="tag">JavaScript</span>
@@ -2159,76 +2179,29 @@ app.get('/restaurants', async (req, res) => {
 
           <div class="project-card">
             <div class="project-header">
-              <div class="project-icon">🔎</div>
-              <span class="project-badge featured">Featured</span>
-            </div>
-            <div class="project-body">
-              <div class="project-name">Restaurant Finder App</div>
-              <div class="project-impact amber">
-                SQLite · REST API · Agile team project
-              </div>
-              <div class="project-desc">
-                A web app that enhances the dining experience through
-                personalized recommendations based on city, cuisine, and price
-                range. Built with a mini database for fast search results and
-                recommendation algorithms tailored to user input. Developed in
-                collaboration with peers using agile practices and version
-                control.
-              </div>
-              <div class="project-stack">
-                <span class="tag">JavaScript</span>
-                <span class="tag green">Node.js</span>
-                <span class="tag purple">SQLite3</span>
-                <span class="tag">HTML/CSS</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <span
-                style="
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 10px;
-                  color: var(--text3);
-                "
-                >Dec 2024 · Lassonde, York University</span
-              >
-              <a
-                href="https://github.com/HosseinGorji05"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-link"
-                >View on GitHub ↗</a
-              >
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-header">
-              <div class="project-icon">🍕</div>
+              <div class="project-icon">🍽️</div>
               <span class="project-badge">Full-Stack</span>
             </div>
             <div class="project-body">
-              <div class="project-name">Restaurant Management Platform</div>
+              <div class="project-name">Kolbeh</div>
               <div class="project-impact">
-                In production · Active use by local restaurant
+                Freelance · In production · Remote (client in Iran)
               </div>
               <div class="project-desc">
-                Developed a fully responsive restaurant management platform
-                utilizing a Node.js and Express backend with SQLite3 for robust
-                data persistence. The system features a comprehensive user
-                authentication suite using bcrypt for secure password hashing,
-                alongside a personalized favorites system and dynamic menu
-                rendering. I engineered an interactive UI with seamless
-                navigation and implemented protected API endpoints to ensure
-                secure data handling. While the full version is currently slated
-                for public release, a production-ready iteration is successfully
-                deployed and in active use by a local pizza establishment.
+                Designed and deployed a responsive restaurant website for a
+                family business in Iran, used via QR-code menu scanning. Built a
+                Node.js + Express backend with SQLite3 for menu management (30+
+                items), user authentication (bcrypt), role-based access control,
+                and a favorites system. Secured REST API endpoints using
+                parameterized queries, input sanitization, and CORS policies.
               </div>
               <div class="project-stack">
                 <span class="tag">JavaScript</span>
                 <span class="tag green">Node.js</span>
                 <span class="tag green">Express</span>
                 <span class="tag purple">SQLite3</span>
-                <span class="tag">HTML/CSS</span>
+                <span class="tag">bcrypt</span>
+                <span class="tag">CORS</span>
               </div>
             </div>
             <div class="project-footer">
@@ -2238,7 +2211,7 @@ app.get('/restaurants', async (req, res) => {
                   font-size: 10px;
                   color: var(--text3);
                 "
-                >May 2025 · Ongoing</span
+                >May 2025 – Present · Freelance Contract</span
               >
               <a
                 href="https://hosseingorji05.github.io/restaurant-website/"
@@ -2273,17 +2246,10 @@ app.get('/restaurants', async (req, res) => {
             <div class="tl-role">Customer Service Associate</div>
             <div class="tl-org">Metro — Toronto, ON</div>
             <ul class="tl-bullets">
+              <li>Managed transactions in a fast-paced retail environment.</li>
               <li>
-                Collaborated with team members in a fast-paced retail
-                environment, demonstrating strong teamwork and reliability.
-              </li>
-              <li>
-                Gathered and communicated customer feedback to management,
-                contributing to service improvements.
-              </li>
-              <li>
-                Delivered excellent customer support by efficiently resolving
-                inquiries and managing transactions.
+                Collaborated with team members to relay customer feedback to
+                management.
               </li>
             </ul>
           </div>
@@ -2300,14 +2266,14 @@ app.get('/restaurants', async (req, res) => {
           <div class="edu-degree">
             Bachelor of Science, Computer Science (Honours)
           </div>
-          <div class="edu-meta">2nd year · Expected graduation 2028</div>
+          <div class="edu-meta">2nd year · Expected graduation May 2028</div>
           <ul class="edu-courses" aria-label="Relevant coursework">
-            <li>Data Structures</li>
-            <li>Algorithms</li>
-            <li>Object-Oriented Programming</li>
+            <li>Object-Oriented Programming in Java</li>
+            <li>Data Structures &amp; Algorithms</li>
+            <li>Computer Architecture</li>
+            <li>Web Development (JavaScript)</li>
             <li>Linear Algebra</li>
             <li>Discrete Mathematics</li>
-            <li>Database Systems</li>
           </ul>
         </div>
       </div>
@@ -2321,9 +2287,9 @@ app.get('/restaurants', async (req, res) => {
           <div class="contact-blurb">
             <h3>Professional inquiries</h3>
             <p>
-              I am available for Winter/Summer 2027 internships, co-op
-              placements, and part-time software development roles in the
-              Greater Toronto Area.
+              I am seeking a Winter 2027 software development internship and am
+              also open to co-op placements and part-time roles in the Greater
+              Toronto Area.
             </p>
             <br />
             <p>
