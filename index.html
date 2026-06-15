@@ -1667,6 +1667,45 @@
           --planet-size: min(36vmin, 170px);
         }
       }
+      .project-video-wrap {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        margin-top: 14px;
+        background: #000;
+        position: relative;
+        /* keeps a 16:9 aspect ratio */
+        aspect-ratio: 16 / 9;
+      }
+
+      .project-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 10px;
+        /* subtle border to blend with dark card */
+        outline: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      /* fallback placeholder if video hasn't loaded */
+      .project-video-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+      }
+
+      /* hide placeholder once video is playing */
+      .project-video-wrap:has(video[src]) ::before {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -2080,6 +2119,63 @@ app.get('/api/menu', async (req, res) => {
         <div class="section-label">Projects</div>
         <h2 class="section-title">Selected projects</h2>
         <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🚀</div>
+              <span class="project-badge featured">Full-Stack</span>
+            </div>
+            <div class="project-body">
+              <div class="project-name">Executo</div>
+              <div class="project-impact purple">
+                Solo Developer · Self-Correcting Agent · Personal Project
+              </div>
+              <div class="project-desc">
+                Built a self-correcting Python code-generation agent that
+                writes, tests, and fixes its own output entirely in an isolated
+                Docker sandbox. Powered by a LangGraph loop (generate → execute
+                → fix) with Groq's LLaMA 3.3 — achieving a 90% pass rate on
+                HumanEval. Ships a streaming Gradio web UI with dark mode, live
+                agent progress, and a strict dual-test loop requiring both
+                AI-generated and benchmark tests to pass.
+              </div>
+              <div class="project-stack">
+                <span class="tag">Python</span>
+                <span class="tag green">LangGraph</span>
+                <span class="tag purple">Docker</span>
+                <span class="tag">Gradio</span>
+                <span class="tag">HumanEval</span>
+              </div>
+            </div>
+            <!-- VIDEO -->
+            <div class="project-video-wrap">
+              <video
+                src="video.mov"
+                autoplay
+                muted
+                loop
+                playsinline
+                class="project-video"
+              ></video>
+            </div>
+
+            <div class="project-footer">
+              <span
+                style="
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 10px;
+                  color: var(--text3);
+                "
+                >June 2026 · Personal Project
+              </span>
+              <a
+                href="https://github.com/HosseinGorji05/Executo"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link"
+                >Visit the project in GitHub ↗</a
+              >
+            </div>
+          </div>
           <div class="project-card">
             <div class="project-header">
               <div class="project-icon">🚨</div>
