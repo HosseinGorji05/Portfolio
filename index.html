@@ -1706,6 +1706,49 @@
       .project-video-wrap:has(video[src]) ::before {
         display: none;
       }
+      .project-video-wrap-h {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 12px;
+        margin-bottom: 14px;
+        background: #000;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .project-video-h {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* shows full horizontal frame, no cropping */
+        display: block;
+        border-radius: 10px;
+        outline: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .video-hint {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: rgba(255, 255, 255, 0.85);
+        background: rgba(0, 0, 0, 0.45);
+        border-radius: 10px;
+        opacity: 1;
+        transition: opacity 0.25s;
+        pointer-events: none;
+      }
+
+      .project-video-wrap-h.playing .video-hint {
+        opacity: 0;
+      }
+
+      .project-video-wrap-h.playing:hover .video-hint {
+        opacity: 1;
+      }
     </style>
   </head>
   <body>
@@ -2172,7 +2215,7 @@ app.get('/api/menu', async (req, res) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 class="project-link"
-                >Visit the project in GitHub ↗</a
+                >View on GitHub ↗</a
               >
             </div>
           </div>
@@ -2203,6 +2246,15 @@ app.get('/api/menu', async (req, res) => {
                 <span class="tag">Toronto Open Data</span>
                 <span class="tag">Edge Compute</span>
               </div>
+              <div class="project-video-wrap-h" onclick="toggleVideo(this)">
+                <video
+                  src="delatio.MOV"
+                  loop
+                  playsinline
+                  controls
+                  class="project-video-h"
+                ></video>
+              </div>
             </div>
             <div class="project-footer">
               <span
@@ -2220,13 +2272,6 @@ app.get('/api/menu', async (req, res) => {
                 class="project-link"
                 >View on GitHub ↗</a
               >
-              <a
-                href="https://www.youtube.com/watch?v=CmYIwBjBeI4"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-link"
-                >View on Youtube ↗</a
-              >
             </div>
           </div>
 
@@ -2242,9 +2287,11 @@ app.get('/api/menu', async (req, res) => {
               </div>
               <div class="project-desc">
                 Built a real-time group meal-planning web app with live
-                item-claiming via Firebase Firestore. Sole owner of frontend
-                design and Git workflow for a two-person team; delivered a
-                functional, demo-able product within the hackathon deadline.
+                item-claiming via Firebase Firestore, allowing guests to
+                coordinate contributions instantly through a shared link•
+                <br />Sole owner of the entire frontend design and Git workflow
+                on a 2-person team; delivered a fully functional, publicly
+                demo-able product within the hackathon deadline•
               </div>
               <div class="project-stack">
                 <span class="tag">JavaScript</span>

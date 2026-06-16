@@ -85,7 +85,7 @@
       {
         keys: ["project", "projects", "built", "build", "portfolio", "work"],
         answer:
-          "Three highlighted projects: Delatio (NVIDIA edge-compute hackathon, May 2026), Potluckio (real-time meal planning, Feb 2026), and Kolbeh (production restaurant platform, May 2025–Present).",
+          "four highlighted projects: Executo , Delatio (NVIDIA edge-compute hackathon, May 2026), Potluckio (real-time meal planning, Feb 2026), and Kolbeh (production restaurant platform, May 2025–Present).",
       },
       {
         keys: ["intern", "internship", "co-op", "coop", "hire", "hiring", "available", "opportunity"],
@@ -100,7 +100,7 @@
       {
         keys: ["hello", "hi", "hey", "who are you", "introduce", "about you"],
         answer:
-          "I am Hossein's AI concierge. I can summarize projects, stack, experience, and hiring availability.",
+          "Hi there, I am Hossein's AI concierge. I can summarize projects, stack, experience, and hiring availability.",
       },
     ];
 
