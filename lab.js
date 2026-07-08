@@ -1,236 +1,457 @@
+/* ------------------------------------------------------------------ *
+ * Interactive portfolio terminal — hand-written, no framework.
+ * Commands, history (Up/Down), Tab completion, and theme control.
+ * ------------------------------------------------------------------ */
 (function () {
-  function focusConcierge() {
-    var labSection = document.getElementById("lab");
-    if (labSection) {
-      labSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    setTimeout(function () {
-      var input = document.querySelector(".chat-compose input");
-      if (input) input.focus();
-    }, 420);
+  "use strict";
+
+  var PROMPT = "visitor@hossein:~$";
+
+  // --- Content (single source of truth for the terminal) -------------
+  var PROJECTS = {
+    executo: {
+      title: "Executo — self-correcting code agent",
+      meta: "Solo · Personal · June 2026",
+      body:
+        "Self-correcting Python code-generation agent using LangGraph and Llama 3.1 8B\n" +
+        "(via Groq). Generates code and unit tests from plain-English prompts, executes\n" +
+        "in an isolated Docker sandbox (no network, capped CPU/RAM), iterates up to 4\n" +
+        "attempts until AI-generated and HumanEval tests both pass.\n" +
+        "80% strict pass rate on 30-task HumanEval sample (~1.5 attempts/solved task).\n" +
+        "stack: Python · LangGraph · Docker · Llama 3.1 8B · HumanEval",
+      url: "https://github.com/HosseinGorji05/Executo",
+    },
+    delatio: {
+      title: "Delatio — edge-compute urban risk intelligence",
+      meta: "GIS & Spatial Systems · NVIDIA Spark Hack Toronto · May 2026",
+      body:
+        "Owned the GIS data layer for a 5-person team. Local-first platform with dual\n" +
+        "proactive/reactive AI loops on a single NVIDIA Grace Blackwell GB10 node — zero\n" +
+        "cloud. Transformed Toronto Open Data into in-memory GeoPandas with spatial\n" +
+        "queries under 20 ms.\n" +
+        "stack: Python · GeoPandas · GIS · Edge Compute",
+      url: "https://github.com/AdrianShah/NVIDIA-SparkHacks",
+    },
+    kolbeh: {
+      title: "Kolbeh — live restaurant platform [in production]",
+      meta: "Freelance · Client in Iran · May 2025 – Jun 2026",
+      body:
+        "Fully responsive restaurant site — primary digital storefront for a live family\n" +
+        "business in Iran, used via QR-code menu scanning. Node.js + Express on SQLite3\n" +
+        "(30+ items), bcrypt auth, role-based access, favorites; REST secured with\n" +
+        "parameterized queries, input sanitization, and CORS.\n" +
+        "stack: Node.js · Express · SQLite3 · bcrypt · CORS",
+      url: "https://hosseingorji05.github.io/restaurant-website/",
+    },
+    potluckio: {
+      title: "Potluckio — real-time group meal planning",
+      meta: "UI/UX Lead & Git · CTRL+HACK+DEL · Feb 2026",
+      body:
+        "Real-time group meal-planning app with live item-claiming via Firebase Firestore\n" +
+        "through a shared link. Owned frontend design and Git workflow as one of two\n" +
+        "developers — shipped a publicly demo-able product before the deadline.\n" +
+        "stack: JavaScript · Firestore · UI/UX · Git",
+      url: "https://adrianshah.github.io/CTRL-DEL-HACK-2.0---Potluck-App./index.html",
+    },
+  };
+
+  var SKILLS = [
+    ["Languages", "TypeScript, JavaScript (ES6+), Python, Java, SQL, C, Bash, HTML5, CSS3"],
+    ["Frontend", "React, Tailwind CSS, Responsive Design, CSS Grid/Flexbox, Async JS"],
+    ["AI & ML", "LangGraph, LLM Prompt Engineering, Agentic Systems, HumanEval"],
+    ["Backend", "Node.js, Express, REST APIs, CRUD, bcrypt, CORS, Input Sanitization"],
+    ["Databases", "Supabase, Firebase Firestore, MySQL, SQLite3, Relational Schema Design"],
+    ["Infra", "Cursor, Docker, Git/GitHub, GeoPandas, GIS, Linux, npm, VS Code"],
+  ];
+
+  var LINKS = {
+    email: "mailto:hoseingorji1383@gmail.com",
+    github: "https://github.com/HosseinGorji05",
+    linkedin: "https://www.linkedin.com/in/hossein-gorji-745488281",
+    resume: "hosseinupdated.pdf",
+  };
+
+  // --- Tiny DOM helpers ----------------------------------------------
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
   }
 
-  function showChatNudge() {
-    var key = "portfolio-chat-nudge-v1-session-dismissed";
-    try {
-      if (sessionStorage.getItem(key) === "true") return;
-    } catch (e) {}
+  function boot() {
+    var root = document.getElementById("terminal-root");
+    if (!root || root.dataset.mounted === "true") return;
+    root.dataset.mounted = "true";
+    root.innerHTML = "";
 
-    var nudge = document.createElement("div");
-    nudge.className = "chat-nudge";
-    nudge.setAttribute("role", "status");
-    nudge.innerHTML =
-      '<div class="chat-nudge-title">Quick Tip</div>' +
-      '<div class="chat-nudge-text">Try the AI Concierge in the Lab section. Ask about projects, stack, or how to contact me.</div>' +
-      '<div class="chat-nudge-actions">' +
-      '<button type="button" class="chat-nudge-btn primary" data-nudge="open">Talk to Concierge</button>' +
-      '<button type="button" class="chat-nudge-btn" data-nudge="dismiss">Dismiss</button>' +
-      "</div>";
-    document.body.appendChild(nudge);
-
-    function dismiss(markSeen) {
-      nudge.classList.remove("show");
-      setTimeout(function () {
-        if (nudge.parentNode) nudge.parentNode.removeChild(nudge);
-      }, 220);
-      if (markSeen) {
-        try {
-          sessionStorage.setItem(key, "true");
-        } catch (e) {}
-      }
-    }
-
-    nudge.addEventListener("click", function (event) {
-      var target = event.target;
-      if (!(target instanceof HTMLElement)) return;
-      var action = target.getAttribute("data-nudge");
-      if (action === "open") {
-        dismiss(true);
-        focusConcierge();
-      } else if (action === "dismiss") {
-        dismiss(true);
-      }
+    // ---- Window chrome ----
+    var win = el("div", "term");
+    var bar = el("div", "term-bar");
+    var dots = el("div", "term-dots");
+    ["r", "y", "g"].forEach(function (c) {
+      dots.appendChild(el("span", "term-dot " + c));
     });
+    bar.appendChild(dots);
+    bar.appendChild(el("span", "term-title", "hossein.gorji — zsh"));
+    win.appendChild(bar);
 
-    setTimeout(function () {
-      nudge.classList.add("show");
-    }, 900);
-  }
+    var screen = el("div", "term-screen");
+    win.appendChild(screen);
 
-  function composeConciergeReply(prompt) {
-    var text = prompt.toLowerCase().trim();
-    if (!text) return "Type a question and I will answer from this portfolio.";
+    // ---- Input line ----
+    var line = el("form", "term-line");
+    var label = el("span", "term-prompt", PROMPT);
+    var input = el("input", "term-input");
+    input.setAttribute("type", "text");
+    input.setAttribute("autocomplete", "off");
+    input.setAttribute("autocapitalize", "off");
+    input.setAttribute("autocorrect", "off");
+    input.setAttribute("spellcheck", "false");
+    input.setAttribute("aria-label", "Terminal input");
+    line.appendChild(label);
+    line.appendChild(input);
+    win.appendChild(line);
 
-    var intents = [
-      {
-        keys: ["kolbeh", "restaurant", "production", "deploy", "deployed", "real user", "live app", "freelance", "qr"],
-        answer:
-          "Kolbeh is my production restaurant platform (May 2025–Present) for a family business in Iran, used via QR-code menu scanning. It uses Node.js, Express, SQLite3, bcrypt auth, role-based access, favorites, and secured REST APIs with parameterized queries and CORS.",
+    root.appendChild(win);
+
+    var history = [];
+    var histIndex = -1;
+
+    function scrollDown() {
+      screen.scrollTop = screen.scrollHeight;
+    }
+
+    function printEcho(cmd) {
+      var row = el("div", "term-row term-echo");
+      row.appendChild(el("span", "term-prompt", PROMPT));
+      row.appendChild(el("span", "term-cmd", " " + cmd));
+      screen.appendChild(row);
+    }
+
+    function printBlock(text, cls) {
+      var pre = el("pre", "term-out " + (cls || ""));
+      pre.textContent = text;
+      screen.appendChild(pre);
+    }
+
+    function printNode(node) {
+      screen.appendChild(node);
+    }
+
+    // ---- Commands -----------------------------------------------------
+    var COMMANDS = {
+      help: function () {
+        printBlock(
+          "Available commands\n" +
+            "  about              who I am, in one paragraph\n" +
+            "  projects           list shipped projects\n" +
+            "  open <name>        open a project / link in a new tab\n" +
+            "  cat <name>         print details (executo, delatio, kolbeh, potluckio)\n" +
+            "  skills             technical skills by area\n" +
+            "  experience         work history\n" +
+            "  education          academic background\n" +
+            "  contact            email, phone, socials\n" +
+            "  resume             download my résumé\n" +
+            "  theme <earth|mars> switch the planet backdrop\n" +
+            "  socials            github / linkedin / email links\n" +
+            "  whoami             quick identity line\n" +
+            "  clear              clear the screen\n" +
+            "\nTip: use ↑ / ↓ for history, Tab to autocomplete."
+        );
       },
-      {
-        keys: ["delatio", "nvidia", "edge", "geopandas", "gis", "spark"],
-        answer:
-          "At NVIDIA Spark Hack Toronto (May 2026), I co-developed Delatio — a local-first edge-compute urban risk intelligence platform on a Grace Blackwell GB100 node with dual AI loops, GeoPandas spatial queries under 20 ms, and zero cloud dependencies.",
-      },
-      {
-        keys: ["potluck", "hackathon", "firebase", "ui", "ux", "team", "lead"],
-        answer:
-          "At CTRL+HACK+DEL (Feb 2026), I was Lead UI/UX Developer and Git specialist on Potluckio — a real-time group meal-planning app with live item-claiming via Firebase Firestore. I owned frontend design and Git workflow for a two-person team.",
-      },
-      {
-        keys: ["stack", "tech", "technologies", "tools", "backend", "frontend", "database"],
-        answer:
-          "Core stack: JavaScript, Python, Node.js, Express, REST APIs, SQLite3/MySQL, Firebase Firestore, React, GeoPandas/GIS, Docker, Git/GitHub, and Linux. I work across full-stack and data-driven projects.",
-      },
-      {
-        keys: ["project", "projects", "built", "build", "portfolio", "work"],
-        answer:
-          "four highlighted projects: Executo , Delatio (NVIDIA edge-compute hackathon, May 2026), Potluckio (real-time meal planning, Feb 2026), and Kolbeh (production restaurant platform, May 2025–Present).",
-      },
-      {
-        keys: ["intern", "internship", "co-op", "coop", "hire", "hiring", "available", "opportunity"],
-        answer:
-          "I am seeking a Winter 2027 software development internship and can contribute across frontend, backend, debugging, and team collaboration in the Greater Toronto Area.",
-      },
-      {
-        keys: ["contact", "email", "linkedin", "reach", "call", "phone", "message"],
-        answer:
-          "Contact me at hoseingorji1383@gmail.com, +1 416 662 4071, or linkedin.com/in/hossein-gorji-745488281.",
-      },
-      {
-        keys: ["hello", "hi", "hey", "who are you", "introduce", "about you"],
-        answer:
-          "Hi there, I am Hossein's AI concierge. I can summarize projects, stack, experience, and hiring availability.",
-      },
-    ];
 
-    var best = null;
-    intents.forEach(function (intent) {
-      var score = intent.keys.reduce(function (total, keyword) {
-        return total + (text.includes(keyword) ? 1 : 0);
-      }, 0);
-      if (!best || score > best.score) {
-        best = { score: score, intent: intent };
-      }
-    });
+      about: function () {
+        printBlock(
+          "Hossein Gorji — full-stack developer, Toronto.\n" +
+            "BSc Honours CS @ York University, expected May 2028.\n" +
+            "Ships real apps: restaurant platforms, self-correcting AI agents, edge GIS.\n" +
+            "3rd of 20+ teams, Cursor Hackathon Toronto (296 participants).\n" +
+            "Seeking co-op/internship 2026–2027."
+        );
+      },
 
-    if (best && best.score > 0) return best.intent.answer;
+      whoami: function () {
+        printBlock("hossein.gorji · full-stack developer · co-op/internship 2026–2027");
+      },
 
-    return (
-      "I can help with projects, tech stack, deployment details, internships, or contact info. " +
-      "Try: 'How can I contact you?'"
-    );
-  }
-
-  function bootLab() {
-    var mount = document.getElementById("innovation-lab-root");
-    if (!mount || !window.React || !window.ReactDOM || mount.dataset.mounted === "true") return;
-    mount.dataset.mounted = "true";
-
-    var h = React.createElement;
-    var useState = React.useState;
-    var QUICK_PROMPTS = [
-      "What did you deploy in production?",
-      "What is your stack?",
-      "Are you available for internships?",
-      "How can I contact you?",
-    ];
-
-    function LabApp() {
-      var _useState = useState([
-          {
-            role: "assistant",
-            text: "Hi, I am Hossein's AI Concierge. Ask about projects, stack, internships, or contact details.",
-          },
-        ]),
-        messages = _useState[0],
-        setMessages = _useState[1];
-      var _useState2 = useState(""),
-        input = _useState2[0],
-        setInput = _useState2[1];
-
-      function sendPrompt(promptText) {
-        var trimmed = promptText.trim();
-        if (!trimmed) return;
-        var reply = composeConciergeReply(trimmed);
-        setMessages(function (prev) {
-          return prev
-            .concat([{ role: "user", text: trimmed }, { role: "assistant", text: reply }])
-            .slice(-10);
+      projects: function () {
+        var node = el("div", "term-out");
+        Object.keys(PROJECTS).forEach(function (key) {
+          var p = PROJECTS[key];
+          var item = el("div", "term-listitem");
+          var name = el("button", "term-linkbtn", "› " + key);
+          name.addEventListener("click", function () {
+            run("cat " + key);
+          });
+          item.appendChild(name);
+          item.appendChild(el("span", "term-dim", "  " + p.title));
+          node.appendChild(item);
         });
-      }
+        node.appendChild(el("div", "term-dim", "\nTry: cat kolbeh   ·   open delatio"));
+        printNode(node);
+      },
 
-      function sendMessage() {
-        var trimmed = input.trim();
-        if (!trimmed) return;
-        sendPrompt(trimmed);
-        setInput("");
-      }
+      cat: function (args) {
+        var key = (args[0] || "").toLowerCase();
+        if (!key) return printBlock("usage: cat <executo|delatio|kolbeh|potluckio>", "warn");
+        var p = PROJECTS[key];
+        if (!p) return printBlock("cat: " + key + ": no such project. Try 'projects'.", "warn");
+        var node = el("div", "term-out");
+        node.appendChild(el("div", "term-strong", p.title));
+        node.appendChild(el("div", "term-dim", p.meta));
+        node.appendChild(el("pre", "term-body", p.body));
+        var openBtn = el("button", "term-linkbtn", "open " + key + " ↗");
+        openBtn.addEventListener("click", function () {
+          window.open(p.url, "_blank", "noopener");
+        });
+        node.appendChild(openBtn);
+        printNode(node);
+      },
 
-      return h(
-        "div",
-        { className: "lab-grid lab-grid-single" },
-        h(
-          "div",
-          { className: "lab-card" },
-          h("h3", null, "AI Concierge"),
-          h(
-            "p",
-            { className: "lab-subtitle" },
-            "Ask about projects, stack, internships, and how to contact Hossein.",
-          ),
-          h(
-            "div",
-            { className: "quick-prompts" },
-            QUICK_PROMPTS.map(function (promptText, idx) {
-              return h(
-                "button",
-                {
-                  key: idx,
-                  type: "button",
-                  className: "quick-prompt-btn",
-                  onClick: function () {
-                    sendPrompt(promptText);
-                  },
-                },
-                promptText,
-              );
-            }),
-          ),
-          h(
-            "div",
-            { className: "chat-thread" },
-            messages.map(function (message, idx) {
-              return h("div", { key: idx, className: "chat-msg " + message.role }, message.text);
-            }),
-          ),
-          h(
-            "div",
-            { className: "chat-compose" },
-            h("input", {
-              value: input,
-              placeholder: "Ask: What did you deploy? How can I contact you?",
-              onChange: function (event) {
-                setInput(event.target.value);
-              },
-              onKeyDown: function (event) {
-                if (event.key === "Enter") sendMessage();
-              },
-            }),
-            h("button", { type: "button", onClick: sendMessage }, "Send"),
-          ),
-        ),
-      );
+      open: function (args) {
+        var key = (args[0] || "").toLowerCase();
+        if (!key) return printBlock("usage: open <project|github|linkedin|email|resume>", "warn");
+        if (PROJECTS[key]) {
+          window.open(PROJECTS[key].url, "_blank", "noopener");
+          return printBlock("opening " + key + " ↗");
+        }
+        if (LINKS[key]) {
+          window.open(LINKS[key], key === "email" ? "_self" : "_blank", "noopener");
+          return printBlock("opening " + key + " ↗");
+        }
+        printBlock("open: " + key + ": not found. Try 'projects' or 'socials'.", "warn");
+      },
+
+      skills: function () {
+        var text = SKILLS.map(function (s) {
+          return "  " + (s[0] + ":").padEnd(12) + s[1];
+        }).join("\n");
+        printBlock(text);
+      },
+
+      experience: function () {
+        printBlock(
+          "Freelance Web Developer — Kolbeh Restaurant (Remote, Iran)\n" +
+            "  May 2025 – Jun 2026\n" +
+            "  › Deployed a live restaurant site used via QR-code menu scanning.\n" +
+            "  › Node.js + Express + SQLite3: 30+ items, bcrypt, RBAC, favorites.\n" +
+            "  › Secured REST APIs with parameterized queries, sanitization, CORS.\n" +
+            "\n" +
+            "Hackathon highlights:\n" +
+            "  › 3rd of 20+ teams — Cursor Hackathon Toronto (296 participants)\n" +
+            "  › GIS layer owner — Delatio, NVIDIA Spark Hack Toronto (May 2026)\n" +
+            "  › UI/UX Lead — Potluckio, CTRL+HACK+DEL (Feb 2026)"
+        );
+      },
+
+      education: function () {
+        printBlock(
+          "York University — Toronto, ON\n" +
+            "  BSc Honours, Computer Science · expected May 2028\n" +
+            "  Coursework: OOP (Java), DSA, Computer Architecture,\n" +
+            "  Discrete Mathematics, Linear Algebra, Web Development (JS)\n" +
+            "  Languages: English (full) · Persian (fluent)"
+        );
+      },
+
+      contact: function () {
+        var node = el("div", "term-out");
+        node.appendChild(el("div", null, "email     hoseingorji1383@gmail.com"));
+        node.appendChild(el("div", null, "phone     +1 416 662 4071"));
+        var row = el("div", null);
+        row.appendChild(document.createTextNode("links     "));
+        ["github", "linkedin"].forEach(function (k, i) {
+          var b = el("button", "term-linkbtn", k);
+          b.addEventListener("click", function () {
+            window.open(LINKS[k], "_blank", "noopener");
+          });
+          if (i) row.appendChild(document.createTextNode("  ·  "));
+          row.appendChild(b);
+        });
+        node.appendChild(row);
+        printNode(node);
+      },
+
+      socials: function () {
+        var node = el("div", "term-out");
+        [["github", LINKS.github], ["linkedin", LINKS.linkedin], ["email", LINKS.email]].forEach(
+          function (pair) {
+            var b = el("button", "term-linkbtn", "› " + pair[0]);
+            b.addEventListener("click", function () {
+              window.open(pair[1], pair[0] === "email" ? "_self" : "_blank", "noopener");
+            });
+            node.appendChild(b);
+            node.appendChild(el("span", "term-dim", "  " + pair[1]));
+            node.appendChild(document.createElement("br"));
+          }
+        );
+        printNode(node);
+      },
+
+      resume: function () {
+        var a = document.createElement("a");
+        a.href = LINKS.resume;
+        a.download = "";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        printBlock("downloading résumé… (hosseinupdated.pdf)");
+      },
+
+      theme: function (args) {
+        var t = (args[0] || "").toLowerCase();
+        if (t !== "earth" && t !== "mars") {
+          return printBlock("usage: theme <earth|mars>", "warn");
+        }
+        if (typeof window.__setPlanet === "function") window.__setPlanet(t);
+        printBlock("theme set to " + t + ".");
+      },
+
+      clear: function () {
+        screen.innerHTML = "";
+      },
+
+      ls: function () {
+        printBlock("about  projects  skills  experience  education  contact  resume");
+      },
+
+      sudo: function () {
+        printBlock("nice try — you don't have permission to do that. (but I like the ambition)", "warn");
+      },
+
+      echo: function (args) {
+        printBlock(args.join(" "));
+      },
+    };
+
+    // command name list for autocomplete
+    var NAMES = Object.keys(COMMANDS).concat(["socials"]);
+
+    function run(raw) {
+      var cmd = raw.trim();
+      printEcho(cmd);
+      if (!cmd) {
+        scrollDown();
+        return;
+      }
+      history.push(cmd);
+      histIndex = history.length;
+
+      var parts = cmd.split(/\s+/);
+      var name = parts[0].toLowerCase();
+      var args = parts.slice(1);
+
+      if (COMMANDS[name]) {
+        COMMANDS[name](args);
+      } else {
+        printBlock(
+          "zsh: command not found: " + name + "\nType 'help' to see what I can do.",
+          "warn"
+        );
+      }
+      scrollDown();
     }
 
-    var root = ReactDOM.createRoot(mount);
-    root.render(h(LabApp));
-    showChatNudge();
+    // ---- Events -------------------------------------------------------
+    line.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var value = input.value;
+      input.value = "";
+      run(value);
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (histIndex > 0) {
+          histIndex--;
+          input.value = history[histIndex] || "";
+          moveCaretEnd(input);
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (histIndex < history.length - 1) {
+          histIndex++;
+          input.value = history[histIndex] || "";
+        } else {
+          histIndex = history.length;
+          input.value = "";
+        }
+        moveCaretEnd(input);
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        var frag = input.value.trim().toLowerCase();
+        if (!frag) return;
+        var matches = NAMES.filter(function (n) {
+          return n.indexOf(frag) === 0;
+        });
+        if (matches.length === 1) {
+          input.value = matches[0] + " ";
+        } else if (matches.length > 1) {
+          printEcho(input.value);
+          printBlock(matches.join("   "));
+          scrollDown();
+        }
+      } else if (e.key === "l" && e.ctrlKey) {
+        e.preventDefault();
+        screen.innerHTML = "";
+      }
+    });
+
+    // focus input when clicking anywhere in the window
+    win.addEventListener("click", function (e) {
+      if (window.getSelection && String(window.getSelection())) return;
+      if (e.target.tagName !== "BUTTON" && e.target.tagName !== "A") input.focus();
+    });
+
+    function moveCaretEnd(node) {
+      requestAnimationFrame(function () {
+        var len = node.value.length;
+        try {
+          node.setSelectionRange(len, len);
+        } catch (err) {}
+      });
+    }
+
+    // ---- Boot sequence (typed) ---------------------------------------
+    var bootLines = [
+      { t: "$ ./hossein --intro", cls: "term-cmd" },
+      { t: "booting portfolio shell…", cls: "term-dim" },
+      { t: "Hossein Gorji · full-stack developer · Toronto", cls: "term-strong" },
+      { t: "3rd @ Cursor Hackathon Toronto · open to co-op 2026–2027", cls: "term-dim" },
+      { t: "Type 'help' to explore, or click a suggestion below.", cls: "term-dim" },
+    ];
+    var i = 0;
+    (function typeBoot() {
+      if (i >= bootLines.length) {
+        addSuggestions();
+        return;
+      }
+      var b = bootLines[i++];
+      printBlock(b.t, b.cls);
+      scrollDown();
+      setTimeout(typeBoot, 260);
+    })();
+
+    function addSuggestions() {
+      var wrap = el("div", "term-suggest");
+      ["help", "projects", "skills", "cat kolbeh", "theme earth", "contact"].forEach(function (s) {
+        var b = el("button", "term-chip", s);
+        b.addEventListener("click", function () {
+          run(s);
+          input.focus();
+        });
+        wrap.appendChild(b);
+      });
+      printNode(wrap);
+      scrollDown();
+    }
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootLab);
+    document.addEventListener("DOMContentLoaded", boot);
   } else {
-    bootLab();
+    boot();
   }
 })();
