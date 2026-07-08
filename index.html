@@ -1141,6 +1141,201 @@
         color: var(--accent);
       }
 
+      /* ---------- Events / gallery ---------- */
+      #events {
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .events-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .event-card {
+        background: var(--surface);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        overflow: hidden;
+      }
+      .event-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+      .event-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        margin-bottom: 0.35rem;
+      }
+      .event-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+      }
+      .event-meta {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        color: var(--text3);
+      }
+      .event-badge {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        background: rgba(var(--accent-rgb), 0.1);
+        border: 1px solid rgba(var(--accent-rgb), 0.25);
+        color: var(--accent);
+        white-space: nowrap;
+      }
+      .event-caption {
+        color: var(--text2);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+        max-width: 62ch;
+      }
+      .event-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1.1rem;
+      }
+      .event-photo {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.35);
+        cursor: zoom-in;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .event-photo.is-empty {
+        cursor: default;
+        pointer-events: none;
+      }
+      .event-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s var(--ease);
+      }
+      .event-photo:not(.is-empty):hover img {
+        transform: scale(1.04);
+      }
+      .event-photo-placeholder {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        padding: 0.75rem;
+        text-align: center;
+        color: var(--text3);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+      .event-photo-placeholder .icon {
+        width: 22px;
+        height: 22px;
+        opacity: 0.45;
+      }
+      .event-photo.is-empty .event-photo-placeholder {
+        display: flex;
+      }
+      .event-photo.is-empty img {
+        display: none;
+      }
+      .event-photo.is-collapsed {
+        display: none;
+      }
+      .event-photo-more {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--text3);
+        font-size: 9.5px;
+      }
+      .event-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        color: var(--accent);
+        text-decoration: none;
+        transition: gap 0.2s var(--ease);
+      }
+      .event-link:hover {
+        gap: 10px;
+      }
+      .event-link .icon {
+        width: 13px;
+        height: 13px;
+      }
+      .events-note {
+        margin-top: 1.75rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        color: var(--text3);
+        line-height: 1.6;
+      }
+
+      .event-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: max(1rem, env(safe-area-inset-top))
+          max(1rem, env(safe-area-inset-right))
+          max(1rem, env(safe-area-inset-bottom))
+          max(1rem, env(safe-area-inset-left));
+        background: rgba(0, 0, 0, 0.92);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .event-lightbox.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .event-lightbox img {
+        max-width: min(960px, 100%);
+        max-height: min(85vh, 100%);
+        border-radius: 10px;
+        object-fit: contain;
+      }
+      .event-lightbox-close {
+        position: absolute;
+        top: max(1rem, env(safe-area-inset-top));
+        right: max(1rem, env(safe-area-inset-right));
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border2);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-size: 1.5rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      body.lightbox-open {
+        overflow: hidden;
+      }
+
       /* ---------- Scroll reveal ---------- */
       .reveal {
         opacity: 0;
@@ -1162,6 +1357,15 @@
         display: none;
       }
 
+      @media (max-width: 1024px) {
+        .nav-links {
+          gap: 1rem;
+        }
+        .nav-links a {
+          font-size: 11.5px;
+        }
+      }
+
       @media (max-width: 900px) {
         .about-grid,
         .contact-grid {
@@ -1171,6 +1375,9 @@
         .grid-3,
         .projects-grid {
           grid-template-columns: 1fr;
+        }
+        .event-gallery {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
 
@@ -1307,16 +1514,80 @@
         }
         .hero {
           min-height: auto;
-          padding: 96px 0 56px;
+          padding: calc(72px + env(safe-area-inset-top)) 0 56px;
+        }
+        .hero-grid {
+          max-width: none;
+        }
+        .hero-identity {
+          flex-wrap: wrap;
+          gap: 0.85rem;
+        }
+        .hero-eyebrow {
+          font-size: 10.5px;
+          padding: 5px 11px;
+          line-height: 1.4;
+        }
+        .hero h1 {
+          font-size: clamp(2rem, 8vw, 2.6rem);
+        }
+        .hero-sub {
+          font-size: 1rem;
+          max-width: none;
+        }
+        .hero-meta {
+          gap: 1rem 1.25rem;
+        }
+        .hero-ctas {
+          flex-direction: column;
+        }
+        .hero-ctas .btn {
+          width: 100%;
+          min-width: 0;
+        }
+        .strip-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.65rem;
+        }
+        .strip-item {
+          font-size: 11.5px;
+          line-height: 1.45;
+        }
+        .event-card {
+          padding: 1.15rem;
+        }
+        .event-gallery {
+          grid-template-columns: 1fr;
+          gap: 0.65rem;
+        }
+        .event-head {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat {
+          padding: 1rem;
+        }
+        .stat-num {
+          font-size: 1.5rem;
+        }
+        .project-footer {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.65rem;
+        }
+        .contact-link {
+          padding: 1rem;
+        }
+        .contact-link-sub {
+          word-break: break-all;
         }
         .hero-photo {
           width: 64px;
           height: 64px;
-        }
-        .hero-ctas .btn {
-          flex: 1;
-          justify-content: center;
-          min-width: 140px;
         }
         .section-title {
           font-size: 1.55rem;
@@ -1360,6 +1631,7 @@
           <ul class="nav-links">
             <li><a href="#about">about</a></li>
             <li><a href="#work">work</a></li>
+            <li><a href="#events">events</a></li>
             <li><a href="#terminal">terminal</a></li>
             <li><a href="#experience">experience</a></li>
             <li><a href="#contact">contact</a></li>
@@ -1401,14 +1673,6 @@
                 />
               </button>
             </div>
-            <a href="hosseinupdated.pdf" class="nav-cta" download>
-              <svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-                />
-              </svg>
-              Resume
-            </a>
           </div>
         </div>
 
@@ -1429,12 +1693,12 @@
       <ul class="mobile-menu-links">
         <li><a href="#about">about</a></li>
         <li><a href="#work">work</a></li>
+        <li><a href="#events">events</a></li>
         <li><a href="#terminal">terminal</a></li>
         <li><a href="#experience">experience</a></li>
         <li><a href="#education">education</a></li>
         <li><a href="#contact">contact</a></li>
       </ul>
-      <a href="hosseinupdated.pdf" class="nav-cta" download>Download Resume</a>
     </div>
 
     <div class="mobile-theme-bar" aria-label="Switch planet theme">
@@ -1604,7 +1868,9 @@
             </p>
             <p>
               Placed <strong>3rd of 20+ teams</strong> at Cursor Hackathon
-              Toronto (296 participants). Seeking a
+              Toronto with teammate Harshita Dhawan on <strong>Lens &amp;
+              Love</strong>. Recently visited <strong>Google Toronto HQ</strong>
+              through GDG on Campus @ York. Seeking a
               <strong>co-op or internship in 2026–2027</strong>.
             </p>
           </div>
@@ -1622,8 +1888,8 @@
               <div class="stat-label">App in production</div>
             </div>
             <div class="stat">
-              <div class="stat-num">3</div>
-              <div class="stat-label">Hackathon builds</div>
+              <div class="stat-num">4</div>
+              <div class="stat-label">Events &amp; hackathons</div>
             </div>
           </div>
         </div>
@@ -1946,6 +2212,189 @@
       </div>
     </section>
 
+    <section id="events">
+      <div class="container">
+        <div class="section-label reveal">events</div>
+        <h2 class="section-title reveal">Hackathons &amp; events</h2>
+        <p class="section-intro reveal">
+          Photos from hackathons and industry events I've attended — pulled from my
+          LinkedIn posts. Tap any photo to enlarge.
+        </p>
+
+        <div class="events-list">
+          <article class="event-card reveal">
+            <div class="event-head">
+              <div>
+                <div class="event-date">Jul 2026</div>
+                <h3 class="event-title">Google Toronto HQ — Engineering, AI &amp; Innovation</h3>
+                <p class="event-meta">GDG on Campus @ York · Google King St HQ</p>
+              </div>
+              <span class="event-badge">Industry visit</span>
+            </div>
+            <p class="event-caption">
+              Selected through GDG on Campus @ York University for an engineering-focused
+              visit to Google Toronto — AI in modern development workflows, a live student
+              demo, office tour, and time with Google engineers.
+            </p>
+            <div class="event-gallery">
+              <div class="event-photo">
+                <img src="events/google-toronto/01.jpg" alt="Google Toronto HQ visit — photo 1" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/google-toronto/01.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/google-toronto/02.jpg" alt="Google Toronto HQ visit — photo 2" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/google-toronto/02.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/google-toronto/03.jpg" alt="Google Toronto HQ visit — photo 3" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/google-toronto/03.jpg
+                </span>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/in/hossein-gorji-745488281" target="_blank" rel="noopener" class="event-link">
+              View on LinkedIn
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </article>
+
+          <article class="event-card reveal">
+            <div class="event-head">
+              <div>
+                <div class="event-date">Jun 2026</div>
+                <h3 class="event-title">Cursor Hackathon Toronto</h3>
+                <p class="event-meta">2-person team · Lens &amp; Love · 296 participants</p>
+              </div>
+              <span class="event-badge">3rd of 20+ teams</span>
+            </div>
+            <p class="event-caption">
+              Teamed up with Harshita Dhawan and placed 3rd of 20+ teams — shipping Lens
+              &amp; Love, a wedding-photographer SaaS with invoicing and a voice-controlled
+              assistant, in a one-hour sprint with Cursor.
+            </p>
+            <div class="event-gallery">
+              <div class="event-photo">
+                <img src="events/cursor-hack/01.jpg" alt="Cursor Hackathon Toronto — photo 1" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/cursor-hack/01.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/cursor-hack/02.jpg" alt="Cursor Hackathon Toronto — photo 2" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/cursor-hack/02.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/cursor-hack/03.jpg" alt="Cursor Hackathon Toronto — photo 3" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/cursor-hack/03.jpg
+                </span>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/in/hossein-gorji-745488281" target="_blank" rel="noopener" class="event-link">
+              View on LinkedIn
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </article>
+
+          <article class="event-card reveal">
+            <div class="event-head">
+              <div>
+                <div class="event-date">May 2026</div>
+                <h3 class="event-title">NVIDIA Spark Hack Toronto</h3>
+                <p class="event-meta">5-person team · Grace Blackwell GB10</p>
+              </div>
+              <span class="event-badge">Delatio · GIS</span>
+            </div>
+            <p class="event-caption">
+              Owned the GIS data layer for Delatio — a local-first edge-compute urban risk
+              platform with spatial queries under 20 ms on a single GB10 node.
+            </p>
+            <div class="event-gallery">
+              <div class="event-photo">
+                <img src="events/nvidia-spark/01.jpg" alt="NVIDIA Spark Hack Toronto — photo 1" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/nvidia-spark/01.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/nvidia-spark/02.jpg" alt="NVIDIA Spark Hack Toronto — photo 2" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/nvidia-spark/02.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/nvidia-spark/03.jpg" alt="NVIDIA Spark Hack Toronto — photo 3" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/nvidia-spark/03.jpg
+                </span>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/posts/hossein-gorji-745488281_nvidia-sparkhack-torontoopendata-ugcPost-7467748324012478465-91LA" target="_blank" rel="noopener" class="event-link">
+              View on LinkedIn
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </article>
+
+          <article class="event-card reveal">
+            <div class="event-head">
+              <div>
+                <div class="event-date">Feb 2026</div>
+                <h3 class="event-title">CTRL+HACK+DEL</h3>
+                <p class="event-meta">2-person team · live demo shipped</p>
+              </div>
+              <span class="event-badge">Potluckio · UI/UX</span>
+            </div>
+            <p class="event-caption">
+              Lead UI/UX and Git workflow on Potluckio — a real-time group meal-planning app
+              with live Firestore item-claiming through a shared link.
+            </p>
+            <div class="event-gallery">
+              <div class="event-photo">
+                <img src="events/ctrl-hack-del/01.jpg" alt="CTRL+HACK+DEL — photo 1" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/ctrl-hack-del/01.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/ctrl-hack-del/02.jpg" alt="CTRL+HACK+DEL — photo 2" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/ctrl-hack-del/02.jpg
+                </span>
+              </div>
+              <div class="event-photo">
+                <img src="events/ctrl-hack-del/03.jpg" alt="CTRL+HACK+DEL — photo 3" loading="lazy" decoding="async" />
+                <span class="event-photo-placeholder">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="m21 17-5.5-5.5L5 21"/></svg>
+                  events/ctrl-hack-del/03.jpg
+                </span>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/posts/hossein-gorji-745488281_freeiran-ugcPost-7438404803501760512-ktyW" target="_blank" rel="noopener" class="event-link">
+              View on LinkedIn
+              <svg class="icon" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="terminal">
       <div class="container">
         <div class="section-label reveal">interactive</div>
@@ -2033,7 +2482,7 @@
             </p>
             <p>
               For hiring, collaboration, or project discussions, reach out by
-              email or LinkedIn — my résumé is available at the top of the page.
+              email or LinkedIn.
             </p>
             <p>Languages: English (full proficiency) · Persian (fluent)</p>
           </div>
@@ -2115,6 +2564,7 @@
       </div>
     </footer>
 
+    <script src="./events.js" defer></script>
     <script src="./lab.js" defer></script>
     <script>
       // ---- Video toggle for Delatio demo ----

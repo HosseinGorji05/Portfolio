@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------ *
  * Interactive portfolio terminal — hand-written, no framework.
- * Commands, history (Up/Down), Tab completion, and theme control.
+ * Commands, history (Up/Down), Tab completion.
  * ------------------------------------------------------------------ */
 (function () {
   "use strict";
@@ -56,8 +56,8 @@
   };
 
   var SKILLS = [
-    ["Languages", "TypeScript, JavaScript (ES6+), Python, Java, SQL, C, Bash, HTML5, CSS3"],
-    ["Frontend", "React, Tailwind CSS, Responsive Design, CSS Grid/Flexbox, Async JS"],
+    ["Languages", "JavaScript (ES6+), Python, Java, SQL, C, Bash, HTML5, CSS3"],
+    ["Frontend", "Tailwind CSS, Responsive Design, CSS Grid/Flexbox, Async JS"],
     ["AI & ML", "LangGraph, LLM Prompt Engineering, Agentic Systems, HumanEval"],
     ["Backend", "Node.js, Express, REST APIs, CRUD, bcrypt, CORS, Input Sanitization"],
     ["Databases", "Supabase, Firebase Firestore, MySQL, SQLite3, Relational Schema Design"],
@@ -153,7 +153,7 @@
             "  education          academic background\n" +
             "  contact            email, phone, socials\n" +
             "  resume             download my résumé\n" +
-            "  theme <earth|mars> switch the planet backdrop\n" +
+            "  events             hackathons & events attended\n" +
             "  socials            github / linkedin / email links\n" +
             "  whoami             quick identity line\n" +
             "  clear              clear the screen\n" +
@@ -166,7 +166,8 @@
           "Hossein Gorji — full-stack developer, Toronto.\n" +
             "BSc Honours CS @ York University, expected May 2028.\n" +
             "Ships real apps: restaurant platforms, self-correcting AI agents, edge GIS.\n" +
-            "3rd of 20+ teams, Cursor Hackathon Toronto (296 participants).\n" +
+            "3rd of 20+ teams at Cursor Hackathon Toronto (Lens & Love, with Harshita Dhawan).\n" +
+            "Recently visited Google Toronto HQ with GDG on Campus @ York.\n" +
             "Seeking co-op/internship 2026–2027."
         );
       },
@@ -239,7 +240,8 @@
             "  › Secured REST APIs with parameterized queries, sanitization, CORS.\n" +
             "\n" +
             "Hackathon highlights:\n" +
-            "  › 3rd of 20+ teams — Cursor Hackathon Toronto (296 participants)\n" +
+            "  › 3rd of 20+ teams — Cursor Hackathon Toronto (Lens & Love w/ Harshita Dhawan)\n" +
+            "  › Google Toronto HQ visit — GDG on Campus @ York (Jul 2026)\n" +
             "  › GIS layer owner — Delatio, NVIDIA Spark Hack Toronto (May 2026)\n" +
             "  › UI/UX Lead — Potluckio, CTRL+HACK+DEL (Feb 2026)"
         );
@@ -299,13 +301,20 @@
         printBlock("downloading résumé… (hosseinupdated.pdf)");
       },
 
-      theme: function (args) {
-        var t = (args[0] || "").toLowerCase();
-        if (t !== "earth" && t !== "mars") {
-          return printBlock("usage: theme <earth|mars>", "warn");
+      events: function () {
+        var list = window.PORTFOLIO_EVENTS;
+        if (!list || !list.length) {
+          return printBlock("No events loaded.", "warn");
         }
-        if (typeof window.__setPlanet === "function") window.__setPlanet(t);
-        printBlock("theme set to " + t + ".");
+        var node = el("div", "term-out");
+        list.forEach(function (ev) {
+          node.appendChild(el("div", "term-strong", ev.title + "  (" + ev.date + ")"));
+          node.appendChild(el("div", "term-dim", ev.badge + " · " + ev.meta));
+          node.appendChild(el("pre", "term-body", ev.caption));
+          node.appendChild(document.createElement("br"));
+        });
+        node.appendChild(el("div", "term-dim", "Photos: scroll to the Events section on the page."));
+        printNode(node);
       },
 
       clear: function () {
@@ -313,7 +322,7 @@
       },
 
       ls: function () {
-        printBlock("about  projects  skills  experience  education  contact  resume");
+        printBlock("about  projects  skills  experience  education  events  contact  resume");
       },
 
       sudo: function () {
@@ -419,7 +428,7 @@
       { t: "$ ./hossein --intro", cls: "term-cmd" },
       { t: "booting portfolio shell…", cls: "term-dim" },
       { t: "Hossein Gorji · full-stack developer · Toronto", cls: "term-strong" },
-      { t: "3rd @ Cursor Hackathon Toronto · open to co-op 2026–2027", cls: "term-dim" },
+      { t: "3rd @ Cursor Hackathon · Google Toronto visit · co-op 2026–2027", cls: "term-dim" },
       { t: "Type 'help' to explore, or click a suggestion below.", cls: "term-dim" },
     ];
     var i = 0;
@@ -436,7 +445,7 @@
 
     function addSuggestions() {
       var wrap = el("div", "term-suggest");
-      ["help", "projects", "skills", "cat kolbeh", "theme earth", "contact"].forEach(function (s) {
+      ["help", "projects", "skills", "cat kolbeh", "events", "contact"].forEach(function (s) {
         var b = el("button", "term-chip", s);
         b.addEventListener("click", function () {
           run(s);
