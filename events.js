@@ -13,7 +13,6 @@
       linkedin: "https://www.linkedin.com/in/hossein-gorji-745488281",
       photos: [
         "events/google-toronto/01.jpg",
-        "events/google-toronto/02.jpg",
         "events/google-toronto/03.jpg",
       ],
     },
@@ -61,7 +60,6 @@
       photos: [
         "events/ctrl-hack-del/01.jpg",
         "events/ctrl-hack-del/02.jpg",
-        "events/ctrl-hack-del/03.jpg",
       ],
     },
   ];
