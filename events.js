@@ -3,6 +3,17 @@
 
   window.PORTFOLIO_EVENTS = [
     {
+      id: "code-the-cup",
+      title: "Build with AI: Code the Cup",
+      date: "Jul 2026",
+      badge: "Hackathon",
+      meta: "GDG Toronto · 90-minute hackathon · Fan Translator",
+      caption:
+        "Built Fan Translator with Adrian Shahnazari Darcheh, Prashanth Kolluru, Akhilesh Sivadasan, and Richard Francis — an offline-ready translator and World Cup phrasebook for fans. Also demoed THE CHASE, an endless runner featuring Cristiano Ronaldo and Lionel Messi.",
+      linkedin: "https://lnkd.in/p/ggtwRC2X",
+      photos: ["events/code-the-cup/01.jpg", "events/code-the-cup/02.jpg"],
+    },
+    {
       id: "google-toronto",
       title: "Google Toronto HQ — Engineering, AI & Innovation",
       date: "Jul 2026",
