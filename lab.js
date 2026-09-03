@@ -57,18 +57,18 @@
 
   var SKILLS = [
     ["Languages", "JavaScript (ES6+), Python, Java, SQL, C, Bash, HTML5, CSS3"],
-    ["Frontend", "Tailwind CSS, Responsive Design, CSS Grid/Flexbox, Async JS"],
-    ["AI & ML", "LangGraph, LLM Prompt Engineering, Agentic Systems, HumanEval"],
-    ["Backend", "Node.js, Express, REST APIs, CRUD, bcrypt, CORS, Input Sanitization"],
-    ["Databases", "Supabase, Firebase Firestore, MySQL, SQLite3, Relational Schema Design"],
-    ["Infra", "Cursor, Docker, Git/GitHub, GeoPandas, GIS, Linux, npm, VS Code"],
+    ["Frontend", "React, Responsive Design, Accessibility (ARIA, WCAG AA), Cross-Browser Development, JSON"],
+    ["Backend", "Node.js, Express.js, REST APIs, CRUD"],
+    ["Databases", "Relational Schema Design, MySQL, SQLite3, PostgreSQL (via Supabase), Firebase Firestore"],
+    ["Testing", "Automated unit & regression testing, GitHub Actions, Docker integration testing"],
+    ["Tools", "Git, GitHub, esbuild, Docker, Linux, VS Code, Cursor"],
+    ["Spoken", "English (full proficiency), Persian (fluent)"],
   ];
 
   var LINKS = {
     email: "mailto:hoseingorji1383@gmail.com",
     github: "https://github.com/HosseinGorji05",
     linkedin: "https://www.linkedin.com/in/hossein-gorji-745488281",
-    resume: "hosseinupdated.pdf",
   };
 
   // --- Tiny DOM helpers ----------------------------------------------
@@ -152,7 +152,6 @@
             "  experience         work history\n" +
             "  education          academic background\n" +
             "  contact            email, phone, socials\n" +
-            "  resume             download my résumé\n" +
             "  events             hackathons & events attended\n" +
             "  socials            github / linkedin / email links\n" +
             "  whoami             quick identity line\n" +
@@ -168,12 +167,12 @@
             "Ships real apps: restaurant platforms, self-correcting AI agents, edge GIS.\n" +
             "3rd of 20+ teams at Cursor Hackathon Toronto (Lens & Love, with Harshita Dhawan).\n" +
             "Recently visited Google Toronto HQ with GDG on Campus @ York.\n" +
-            "Seeking co-op/internship 2026–2027."
+            "Seeking co-op/internship 2027."
         );
       },
 
       whoami: function () {
-        printBlock("hossein.gorji · full-stack developer · co-op/internship 2026–2027");
+        printBlock("hossein.gorji · full-stack developer · co-op/internship 2027");
       },
 
       projects: function () {
@@ -212,7 +211,7 @@
 
       open: function (args) {
         var key = (args[0] || "").toLowerCase();
-        if (!key) return printBlock("usage: open <project|github|linkedin|email|resume>", "warn");
+        if (!key) return printBlock("usage: open <project|github|linkedin|email>", "warn");
         if (PROJECTS[key]) {
           window.open(PROJECTS[key].url, "_blank", "noopener");
           return printBlock("opening " + key + " ↗");
@@ -291,16 +290,6 @@
         printNode(node);
       },
 
-      resume: function () {
-        var a = document.createElement("a");
-        a.href = LINKS.resume;
-        a.download = "";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        printBlock("downloading résumé… (hosseinupdated.pdf)");
-      },
-
       events: function () {
         var list = window.PORTFOLIO_EVENTS;
         if (!list || !list.length) {
@@ -322,7 +311,7 @@
       },
 
       ls: function () {
-        printBlock("about  projects  skills  experience  education  events  contact  resume");
+        printBlock("about  projects  skills  experience  education  events  contact");
       },
 
       sudo: function () {
@@ -428,7 +417,7 @@
       { t: "$ ./hossein --intro", cls: "term-cmd" },
       { t: "booting portfolio shell…", cls: "term-dim" },
       { t: "Hossein Gorji · full-stack developer · Toronto", cls: "term-strong" },
-      { t: "3rd @ Cursor Hackathon · Google Toronto visit · co-op 2026–2027", cls: "term-dim" },
+      { t: "3rd @ Cursor Hackathon · Google Toronto visit · co-op 2027", cls: "term-dim" },
       { t: "Type 'help' to explore, or click a suggestion below.", cls: "term-dim" },
     ];
     var i = 0;
